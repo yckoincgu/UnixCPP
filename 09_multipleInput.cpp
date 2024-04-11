@@ -1,36 +1,29 @@
-// C++ program to read multiple numbers in a single line of 
-// input 
+// C++ program to input multiple items 
 #include <iostream> 
-#include <windows.h>
+#include <vector> 
 using namespace std; 
 
 int main() 
 { 
-	int numbers[10]; 
-	int num, count; 
+	int n; 
+	// Input the number of elements 
+	cout << "Enter the number of elements you want to "
+			"input: "; 
+	cin >> n; 
 
-	// Prompt the user to enter numbers separated by spaces 
-	cout << "Enter numbers separated by spaces: "; 
+	// Initialize a vector of size n 
+	vector<int> vec(n); 
 
-	// Input numbers until the user enters something other 
-	// than an integer 
-	
-	while (count< sizeof(numbers)) {
-		count=0;
-		while (!(GetAsyncKeyState(VK_RETURN) & 0x8000)) { 
-		 	// Add the entered number to the array
-			cin >> num; 
-			numbers[count]=num;
-			count++; 
-		}
-		break;
+	// Input n numbers into the vector 
+	cout << "Enter " << n << " numbers: "; 
+	for (int i = 0; i < n; i++) { 
+		cin >> vec[i]; 
 	} 
-	cout << "You entered: "<< count << " integers";
-	
+
 	// Output the entered numbers 
-	cout << endl; 
-	for (int i =0; i< count; i++) { 
-		cout << numbers[i] << " "; 
+	cout << "You entered: "; 
+	for (int i=0; i< sizeof(vec); i++) { 
+		cout << vec[i] << " "; 
 	} 
 	cout << endl; 
 

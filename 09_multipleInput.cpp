@@ -1,31 +1,29 @@
 // C++ program to input multiple items 
 #include <iostream> 
+#include <string>
 #include <vector> 
 using namespace std; 
 
 int main() 
 { 
-	int n; 
-	// Input the number of elements 
-	cout << "Enter the number of elements you want to "
-			"input: "; 
-	cin >> n; 
+	
+	/* std::string 
+	   (1) 	a class in the C++ Standard Library 
+	 		that represents a sequence of characters
+	   (2) 	managing its own memory and can 
+	    	dynamically resize itself to accommodate the length of the text it holds
+	*/
+	std::string line;
+	
+	std::getline(std::cin, line);
+	std::cout << "You entered: " << line << std::endl;
 
-	// Initialize a vector of size n 
-	vector<int> vec(n); 
 
-	// Input n numbers into the vector 
-	cout << "Enter " << n << " numbers: "; 
-	for (int i = 0; i < n; i++) { 
-		cin >> vec[i]; 
-	} 
 
-	// Output the entered numbers 
-	cout << "You entered: "; 
-	for (int i=0; i< sizeof(vec); i++) { 
-		cout << vec[i] << " "; 
-	} 
-	cout << endl; 
+	
+	
+	
+	
 
 	return 0; 
 }

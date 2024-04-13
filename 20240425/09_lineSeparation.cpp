@@ -18,7 +18,7 @@ int main() {
         // Get the next token
         token = strtok(NULL, delim);	// not recommended
     }
-/* ------------------------------------------------*/    
+/* --------We will come back after introduction of class ---------*/    
 	/* std::string 
 	   (1) 	a class in the C++ Standard Library 
 	 		that represents a sequence of characters

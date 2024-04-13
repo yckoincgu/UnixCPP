@@ -3,7 +3,7 @@
 // ㄧ?? 
 void func(void);
  
-static int count = 10; /* Ы?秖 */
+static int count = 10; /* 办 */
  
 int main()
 {
@@ -13,11 +13,11 @@ int main()
     }
     return 0;
 }
-// ㄧ?﹚?
+
 void func( void )
 {
-    static int i = 5; // Ы场???秖
+    static int i = 5; // Ы场
     i++;
-    std::cout << "?秖 i ? " << i ;
-    std::cout << " , ?秖 count ? " << count << std::endl;
+    std::cout << "Ы场 i = " << i ;
+    std::cout << " , 办 count = " << count << std::endl;
 }

@@ -1,6 +1,5 @@
 #include <iostream>
  
-// ич??й· 
 void func(void);
  
 static int count = 10; /* е■░ь */

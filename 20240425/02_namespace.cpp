@@ -39,7 +39,7 @@ int main() {
 	using MyNamespace::myFunction; // Bring myFunction into the current scope	
     cout << myFunction(3, 4) << endl; // No need to use MyNamespace::
     
-	using namespace first_space;
+	using namespace second_space;
    	// This calls function from first name space.
   	func();
     

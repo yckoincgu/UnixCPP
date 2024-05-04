@@ -1,7 +1,7 @@
 // C++ program to input multiple items 
 #include <iostream> 
 #include <string>
-#include <vector> 
+
 using namespace std; 
 
 int main() 
@@ -17,6 +17,7 @@ int main()
 	
 	std::getline(std::cin, line);
 	std::cout << "You entered: " << line << std::endl;
+	std::getline(std::cin, line);
 
 
 

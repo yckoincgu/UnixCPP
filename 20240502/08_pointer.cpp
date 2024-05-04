@@ -20,7 +20,6 @@ int main()
 	cout << *p << endl;
 	cout << *p + 1 << endl;
 	cout << *(p + 1) << endl;
-	cout << 2 [p] << endl;
 	cout << p[2] << endl;
 	*p++;
 

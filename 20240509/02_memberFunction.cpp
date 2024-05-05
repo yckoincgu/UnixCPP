@@ -1,41 +1,44 @@
 // C++ program to demonstrate function 
 // declaration outside class 
 
-#include <bits/stdc++.h> 
+#include <iostream>  
 using namespace std; 
-class Geeks 
+
+class Student 
 { 
 	public: 
-	string geekname; 
+	string name; 
 	int id; 
 	
-	// printname is not defined inside class definition 
+	// printname is NOT defined inside class definition 
 	void printname(); 
 	
-	// printid is defined inside class definition 
+	// printid is defined INSIDE class definition 
 	void printid() 
 	{ 
-		cout <<"Geek id is: "<<id; 
+		cout <<"student id is: "<<id; 
 	} 
 }; 
 
 // Definition of printname using scope resolution operator :: 
-void Geeks::printname() 
+void Student::printname() 
 { 
-	cout <<"Geekname is: "<<geekname; 
+	cout <<"student name is: "<<name; 
 } 
+
+
 int main() { 
 	
-	Geeks obj1; 
-	obj1.geekname = "xyz"; 
-	obj1.id=15; 
+	Student student; 
+	student.name = "xyz"; 
+	student.id=15; 
 	
 	// call printname() 
-	obj1.printname(); 
+	student.printname(); 
 	cout << endl; 
 	
 	// call printid() 
-	obj1.printid(); 
+	student.printid(); 
 	return 0; 
 } 
 

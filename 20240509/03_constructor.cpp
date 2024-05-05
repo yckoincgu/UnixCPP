@@ -1,34 +1,37 @@
 // C++ program to demonstrate constructors 
 #include <bits/stdc++.h> 
 using namespace std; 
-class Geeks 
+class Student 
 { 
 	public: 
+	std::string name;
 	int id; 
 	
 	//Default Constructor 
-	Geeks() 
+	Student() 
 	{ 
 		cout << "Default Constructor called" << endl; 
 		id=-1; 
 	} 
 	
 	//Parameterized Constructor 
-	Geeks(int x) 
+	Student(std::string name, int id):name(name), id(id) 
 	{ 
 		cout <<"Parameterized Constructor called "<< endl; 
-		id=x; 
+
 	} 
 }; 
+
 int main() { 
 	
-	// obj1 will call Default Constructor 
-	Geeks obj1; 
-	cout <<"Geek id is: "<<obj1.id << endl; 
+	// student will call Default Constructor 
+	Student student; 
+	cout <<"student id is: "<<student.id << endl; 
 	
-	// obj2 will call Parameterized Constructor 
-	Geeks obj2(21); 
-	cout <<"Geek id is: " <<obj2.id << endl; 
+	// student_2 will call Parameterized Constructor 
+	Student student_2("john", 21); 
+	cout <<"student_2 name is: " <<student_2.name << endl;
+	cout <<"student_2 id is: " <<student_2.id << endl; 
 	return 0; 
 } 
 

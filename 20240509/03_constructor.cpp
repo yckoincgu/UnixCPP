@@ -25,13 +25,15 @@ class Student
 int main() { 
 	
 	// student will call Default Constructor 
-	Student student; 
-	cout <<"student id is: "<<student.id << endl; 
+	Student student_1; 
+	cout <<"student_1 id is: "<<student_1.id << endl; 
 	
 	// student_2 will call Parameterized Constructor 
 	Student student_2("john", 21); 
 	cout <<"student_2 name is: " <<student_2.name << endl;
 	cout <<"student_2 id is: " <<student_2.id << endl; 
+	
+	
 	return 0; 
 } 
 

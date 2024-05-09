@@ -43,8 +43,8 @@ void printVectorCharacters(std::vector<char> characters){
 
 int main() {
     // Declare a vector of integers
-    std::vector<int> numbers;
-    printVectorNumbers(numbers);
+	std::vector<int> numbers;
+	printVectorNumbers(numbers);
     
 	std::vector<char> characters;
 	printVectorCharacters(characters);

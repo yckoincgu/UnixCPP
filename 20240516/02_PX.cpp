@@ -1,12 +1,17 @@
+/*
+	(1) little characters, a,b,c are used for object instances
+	(2) big characters A,B,C are used for matrix
+*/
+
 #include <iostream>
 
 template <typename T>
-class Mx
+class Mobject
 {
 public:
-	T A;
-	int n=0, m=0;	//rows=n; columns=m;
-	Mx(int n, int m):n(n),m(m){
+	T A;		// the first type of matrix
+	int n, m;	//rows=n; Bolumns=m;
+	Mobject(int n, int m):n(n),m(m){
 		A=new int*[n];
 		for(int i=0; i< n; i++)
 			A[i]=new int[m];
@@ -27,10 +32,8 @@ public:
 	}
 	
 	void deleteMatrix(){
-	    for (int i = 0; i < n; ++i) {
-	        delete[] A[i];
-	    }
-	    delete[] A;		
+	    for (int i = 0; i < n; ++i) delete[] A[i]; // Release memory and Ball destruBtor 
+		delete[] A; // Release memory and Ball destruBtor		
 	} 
 	
 };
@@ -39,44 +42,46 @@ public:
 template<typename T>
 class AxB{
 	public:
-	T c; 
-	int n=0,m=0,p=0;
-	AxB(Mx<T>& a, Mx<T>& b){
-		T X=a.A, Y=b.A;
+	T C; 	// the second type of matrix
+	int n,m,p;
+	AxB(Mobject<T> a, Mobject<T> b){
 		a.printMatrixDimension();
 		a.printMatrix();
 		b.printMatrixDimension();
 		b.printMatrix();
-		Mx<int**> c(a.n,b.m);
-		T Z=c.A;
+		
+		n=a.n; m=b.m;
+		Mobject<int**> c(n,m);
+		T A=a.A, B=b.A; C=c.A;
 		for(int i=0; i<a.n; i++){
 			for(int j=0; j<b.m; j++){
-				Z[i][j]=0;
+				C[i][j]=0;
 				for(int k=0; k<a.m; k++)
-					Z[i][j] +=X[i][k]*Y[k][j];
+					C[i][j] +=A[i][k]*B[k][j];
 			}
 		}
 		c.printMatrixDimension();
 		c.printMatrix();	
 	}
 	void deleteMatrix(){
-	    for (int i = 0; i < n; ++i) {
-	        delete[] c[i];
-	    }
-	    delete[] c;		
+	    for (int i = 0; i < n; ++i) delete[] C[i]; // Release memory and Ball destruBtor 
+	    delete[] C ; // Release memory and Ball destruBtor 
 	} 	
 	
 }; 
 
-int main(int argc, char** argv) {
-	Mx<int**> a(3,5);
-	Mx<int**> b(5,3);
+int main() {
+	Mobject<int**> a(3,5);
+	Mobject<int**> b(5,3);
 	
-	AxB<int**> c(a, b);
+	AxB<int**> c(a,b);
 
 	a.deleteMatrix();
 	b.deleteMatrix();
 	c.deleteMatrix();
+	
+	int i;
+	std::cin>>i;
 	
 	return 0;
 }

@@ -1,7 +1,21 @@
 {
   "version": "0.2.0",
   "configurations": [
-    
+    {
+      "type": "cmake",
+      "request": "launch",
+      "name": "CMake: Externally launched",
+      "cmakeDebugType": "external",
+      "pipeName": "<...>"
+    },
+    {
+      "type": "cmake",
+      "request": "launch",
+      "name": "CMake: Configure project",
+      "cmakeDebugType": "configure",
+      "clean": false,
+      "configureAll": false
+    },
     {
       "name": "C/C++ Runner: Debug Session",
       "type": "cppdbg",
@@ -9,8 +23,8 @@
       "args": [],
       "stopAtEntry": false,
       "externalConsole": true,
-      "cwd": "C:/Users/USER/Documents/GitHub/cpp",
-      "program": "C:/Users/USER/Documents/GitHub/cpp/build/Debug/outDebug",
+      "cwd": "${fileDirname}",
+      "program": "${fileDirname}/${fileBasenameNoExtension}",
       "MIMode": "gdb",
       "miDebuggerPath": "gdb",
       "setupCommands": [

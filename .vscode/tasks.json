@@ -1,0 +1,23 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "build",
+            "type": "shell",
+            "command": "g++",
+            "args": [
+                "-std=c++14",           // Specify C++17 standard
+                "-Wall",                // Enable all warnings
+                "-Wextra",              // Enable extra warnings
+                "-o",
+                "${fileDirname}/${fileBasenameNoExtension}",  // Output file name (source file name without extension)
+                "${file}"               // Path to the current file being compiled
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "problemMatcher": "$gcc"
+        }
+    ]
+}

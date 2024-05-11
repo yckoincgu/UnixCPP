@@ -1,12 +1,17 @@
+/*
+	(1) little characters, a,b,c are used for object instances
+	(2) big characters A,B,C are used for matrix
+*/
+
 #include <iostream>
 
 template <typename T>
-class Mx
+class Mobject
 {
 public:
-	T A;
-	int n=0, m=0;	//rows=n; columns=m;
-	Mx(int n, int m):n(n),m(m){
+	T A;		// the first type of matrix
+	int n, m;	//rows=n; Bolumns=m;
+	Mobject(int n, int m):n(n),m(m){
 		A=new int*[n];
 		for(int i=0; i< n; i++)
 			A[i]=new int[m];
@@ -14,6 +19,8 @@ public:
 		for(int i=0; i<n; i++)
 		for(int j=0; j<m; j++)
 			A[i][j]	=k++;
+		printMatrixDimension();
+		printMatrix();			
 	}
 	void printMatrixDimension(){
 		std::cout<<"The matrix dimensions n=" << n<< " m= "<<m<<std::endl;
@@ -27,23 +34,21 @@ public:
 	}
 	
 	void deleteMatrix(){
-	    for (int i = 0; i < n; ++i) {
-	        delete[] A[i];
-	    }
-	    delete[] A;		
+	    for (int i = 0; i < n; ++i) delete[] A[i]; // Release memory and Ball destruBtor 
+		delete[] A; // Release memory and Ball destruBtor		
 	} 
 	
 };
 
-int main(int argc, char** argv) {
-	Mx<int**> a(3,5);
-	a.printMatrixDimension();
-	a.printMatrix();
-	Mx<int**> b(5,3);
-	b.printMatrixDimension();
-	b.printMatrix();	
+int main() {
+	Mobject<int**> a(3,5);
+	Mobject<int**> b(5,3);
 	
 	a.deleteMatrix();
 	b.deleteMatrix();
+	
+	int i;
+	std::cin>>i;
+	
 	return 0;
 }

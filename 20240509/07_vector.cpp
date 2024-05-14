@@ -49,6 +49,9 @@ int main() {
 	std::vector<char> characters;
 	printVectorCharacters(characters);
 
+    int i;
+	std::cin>>i;
+
     return 0;
 }
 

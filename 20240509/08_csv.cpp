@@ -12,4 +12,7 @@ int main()
     {
     	std::cout<< "student " << i++ << ": "<< line << std::endl;
     }
+
+   
+	std::cin>>i;
  }

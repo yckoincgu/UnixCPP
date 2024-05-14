@@ -20,6 +20,8 @@ int main() {
     for (size_t i = 0; i < tokens.size(); ++i) {
         std::cout << "Token " << i << ": " << tokens[i] << std::endl;
     }
+    int i;
+	std::cin>>i;
     return 0;
 }
 

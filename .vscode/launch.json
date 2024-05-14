@@ -4,6 +4,14 @@
     {
       "type": "cmake",
       "request": "launch",
+      "name": "CMake: Configure project",
+      "cmakeDebugType": "configure",
+      "clean": false,
+      "configureAll": false
+    },
+    {
+      "type": "cmake",
+      "request": "launch",
       "name": "CMake: Externally launched",
       "cmakeDebugType": "external",
       "pipeName": "<...>"

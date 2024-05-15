@@ -2,27 +2,15 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "type": "cmake",
+      "name": "(Windows) Launch",
+      "type": "cppvsdbg",
       "request": "launch",
-      "name": "CMake: Configure project",
-      "cmakeDebugType": "configure",
-      "clean": false,
-      "configureAll": false
-    },
-    {
-      "type": "cmake",
-      "request": "launch",
-      "name": "CMake: Externally launched",
-      "cmakeDebugType": "external",
-      "pipeName": "<...>"
-    },
-    {
-      "type": "cmake",
-      "request": "launch",
-      "name": "CMake: Configure project",
-      "cmakeDebugType": "configure",
-      "clean": false,
-      "configureAll": false
+      "program": "${fileDirname}/${fileBasenameNoExtension}",
+      "args": [],
+      "stopAtEntry": false,
+      "cwd": "${fileDirname}",
+      "environment": [],
+      "console": "externalTerminal"
     },
     {
       "name": "C/C++ Runner: Debug Session",

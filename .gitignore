@@ -1,3 +1,6 @@
 
 *.exe
 *.o
+20240425/.vscode/c_cpp_properties.json
+20240425/.vscode/launch.json
+20240425/.vscode/settings.json

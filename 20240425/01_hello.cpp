@@ -12,5 +12,8 @@ int main()
  */	
 	 std::cout << "Hello, World 1";
 	 std::cout << "Hello, world 2 with a new line character \\n" << std::endl;	 
+	 int i;
+	 std::cin>>i;
+	 
  return 0;
 }

@@ -15,23 +15,28 @@ class Graph {
   void BFS(int startVertex);
 };
 
-class V{
+class Vertice{
 private:
-    
-   
 public:
-    std::list<V> neighbors;
+    std::list<Vertice> neighbors;
     int nodeID;    
-    V(int node){};
+    Vertice(int node){
+      std::cout<< "A p is "<< nodeID << std::endl;
+
+    };
 };
 
 template <typename T>
 class E{
 public:
     T p,q;
-    E(T source_V, T destinate_V):p<T>(source_V), q<T>(destinate_V){
-        p.nodeID=1; q.nodeID=2;
-        p.neighbors.push_back(q);
+    E(T source_V, T destinate_V):p(source_V), q(destinate_V)
+    {
+
+        //std::cout<< " p is "<< source_V->nodeID << std::endl;
+        //std::cout<< " p is "<< q->nodeID << std::endl;
+        //q.nodeID=2;
+        //p.neighbors.push_back(q);
     };
     
 
@@ -39,12 +44,15 @@ public:
 
 int main() {
 
-    V v1(1), v2(2), v3(3);
-    E<V*> e1(&v1, &v2);
+    Vertice v1(1), v2(2), v3(3);
+    std::cout<< "1 p is "<< v1.nodeID << std::endl;
+    std::cout<< "1 q is "<< v2.nodeID << std::endl;
+
+    //E<Vertice> e1(v1, v2);
     //e1.p.neighbors
 
-    std::cout<< " p is "<< v1.nodeID << std::endl;
-    std::cout<< " q is "<< v2.nodeID << std::endl;
+    //std::cout<< "3 p is "<< v1.nodeID << std::endl;
+    //std::cout<< "3 q is "<< v2.nodeID << std::endl;
 
 
     int i;

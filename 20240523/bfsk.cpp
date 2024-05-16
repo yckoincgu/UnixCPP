@@ -20,7 +20,7 @@ private:
 public:
     std::list<Vertice> neighbors;
     int nodeID;    
-    Vertice(int node){
+    Vertice(int nodeID):nodeID(nodeID){
       std::cout<< "A p is "<< nodeID << std::endl;
 
     };
@@ -33,10 +33,10 @@ public:
     E(T source_V, T destinate_V):p(source_V), q(destinate_V)
     {
 
-        //std::cout<< " p is "<< source_V->nodeID << std::endl;
-        //std::cout<< " p is "<< q->nodeID << std::endl;
+        std::cout<< "E p is "<< p.nodeID << std::endl;
+        std::cout<< "E p is "<< q.nodeID << std::endl;
         //q.nodeID=2;
-        //p.neighbors.push_back(q);
+        p.neighbors.push_back(q);
     };
     
 
@@ -45,14 +45,14 @@ public:
 int main() {
 
     Vertice v1(1), v2(2), v3(3);
-    std::cout<< "1 p is "<< v1.nodeID << std::endl;
-    std::cout<< "1 q is "<< v2.nodeID << std::endl;
+    //std::cout<< "1 p is "<< v1.nodeID << std::endl;
+    //std::cout<< "1 q is "<< v2.nodeID << std::endl;
 
-    //E<Vertice> e1(v1, v2);
+    E<Vertice> e1(v1, v2);
     //e1.p.neighbors
 
-    //std::cout<< "3 p is "<< v1.nodeID << std::endl;
-    //std::cout<< "3 q is "<< v2.nodeID << std::endl;
+    std::cout<< "3 p is "<< v1.nodeID << std::endl;
+    std::cout<< "3 q is "<< v2.nodeID << std::endl;
 
 
     int i;

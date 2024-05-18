@@ -19,6 +19,10 @@ int main()
 	student.name = "Abhi"; 	// accessing data member 
 	
 	student.printname(); 	// accessing member function 
+
+	int i;
+	std::cin>>i;
+	
 	return 0; 
 }
 

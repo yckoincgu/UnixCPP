@@ -3,22 +3,17 @@
 
 using namespace std;
 
-template<typename T, typename S>
-class Graph {
 
-  //Vertice
+class Graph {
+  int numVertices;
+  list<int>* adjLists;
   bool* visited;
 
    public:
-   	list<T> vLists;
-	list<S> eLists;
-  	Graph(T t, S s);
-  	//void addEdge(int src, int dest);
-  	void BFS(T startVertex);
-  
+  Graph(int vertices);
+  void addEdge(int src, int dest);
+  void BFS(int startVertex);
 };
-
-
 
 class Vertice{
 private:
@@ -33,9 +28,11 @@ public:
     	std::cout<<"Node "<< nodeID <<" has neighbors ";
     	for(std::list<Vertice*>::iterator 
 		    it=neighbors.begin(); it!=neighbors.end(); it++){
-		    	/* Using (*p),
+		    	/* Use (*p) to make the order of operations clear, 
 				   especially when combining dereferencing 
-				   with other operators like . (invoking operator)
+				   with other operators like 
+				   (invoking operator) . or 
+				    -> 
 				*/   
 				std::cout<<(*it)->nodeID<<", ";
 			}
@@ -43,37 +40,28 @@ public:
 	}
 };
 
-template <typename T, typename S>
+template <typename T>
 class E{
 public:
     T p,q;
-    
     E(T source_V, T destinate_V):p(source_V), q(destinate_V)
     {
+        //q->nodeID=10;
         p->neighbors.push_back(q);
-        Graph::eLists
+        
         std::cout<< "E q is "<< q->nodeID << std::endl;        
     };
+    
+
 };
-
-
 
 int main() {
 
-    Vertice v0(0), v1(1), v2(2);
+    Vertice v1(1), v2(2), v3(3);
     
 
-    E<Vertice*> 
-	e1(&v0, &v1),
-	e2(&v0, &v2),
-	e3(&v1, &v0),
-	e4(&v1, &v2),
-	e5(&v2, &v1),
-	e6(&v2, &v0);
-    
+    E<Vertice*> e1(&v1, &v2);
     v1.printList();
-    v2.printList();
-    v0.printList();
 
     //std::cout<< "3 p is "<< v1.nodeID << std::endl;
     

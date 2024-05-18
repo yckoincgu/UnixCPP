@@ -3,22 +3,17 @@
 
 using namespace std;
 
-template<typename T, typename S>
-class Graph {
 
-  //Vertice
+class Graph {
+  int numVertices;
+  list<int>* adjLists;
   bool* visited;
 
    public:
-   	list<T> vLists;
-	list<S> eLists;
-  	Graph(T t, S s);
-  	//void addEdge(int src, int dest);
-  	void BFS(T startVertex);
-  
+  Graph(int vertices);
+  void addEdge(int src, int dest);
+  void BFS(int startVertex);
 };
-
-
 
 class Vertice{
 private:
@@ -43,20 +38,20 @@ public:
 	}
 };
 
-template <typename T, typename S>
+template <typename T>
 class E{
 public:
     T p,q;
-    
     E(T source_V, T destinate_V):p(source_V), q(destinate_V)
     {
+        
         p->neighbors.push_back(q);
-        Graph::eLists
+        
         std::cout<< "E q is "<< q->nodeID << std::endl;        
     };
+    
+
 };
-
-
 
 int main() {
 

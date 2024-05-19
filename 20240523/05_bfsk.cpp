@@ -40,8 +40,7 @@ public:
 
 template <typename T>
 class Graph {
-
-  public:
+	public:
     std::set<T> vSet;
 	std::set<Edge<T>*> eSet;
   	void bfs(T startVertex){

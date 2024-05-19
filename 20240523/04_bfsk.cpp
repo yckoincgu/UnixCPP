@@ -1,5 +1,7 @@
 #include <iostream>
 #include <list>
+/*   (*it)->nodeID   */
+
 
 using namespace std;
 
@@ -28,9 +30,10 @@ public:
     	std::cout<<"Node "<< nodeID <<" has neighbors ";
     	for(std::list<Vertice*>::iterator 
 		    it=neighbors.begin(); it!=neighbors.end(); it++){
-		    	/* Using (*p),
+		    	/* Using (*it),
+				   treating (*it) as an instance
 				   especially when combining dereferencing 
-				   with other operators like . (invoking operator)
+				   with other operators like ->
 				*/   
 				std::cout<<(*it)->nodeID<<", ";
 			}

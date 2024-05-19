@@ -1,29 +1,14 @@
 #include <iostream>
 #include <list>
-
+#include <set>
+/*   (*it)->nodeID   */
 using namespace std;
-
-template<typename T, typename S>
-class Graph {
-
-  //Vertice
-  bool* visited;
-
-   public:
-   	list<T> vLists;
-	list<S> eLists;
-  	Graph(T t, S s);
-  	//void addEdge(int src, int dest);
-  	void BFS(T startVertex);
-  
-};
-
-
 
 class Vertice{
 private:
 public:
     std::list<Vertice*> neighbors;
+    
     int nodeID;    
     Vertice(int nodeID):nodeID(nodeID){
       std::cout<< "A p is "<< nodeID << std::endl;
@@ -33,43 +18,55 @@ public:
     	std::cout<<"Node "<< nodeID <<" has neighbors ";
     	for(std::list<Vertice*>::iterator 
 		    it=neighbors.begin(); it!=neighbors.end(); it++){
-		    	/* Using (*p),
-				   especially when combining dereferencing 
-				   with other operators like . (invoking operator)
-				*/   
 				std::cout<<(*it)->nodeID<<", ";
 			}
 		std::cout<<std::endl;	
 	}
 };
 
-template <typename T, typename S>
-class E{
+template <typename T>
+class Edge{
 public:
     T p,q;
     
-    E(T source_V, T destinate_V):p(source_V), q(destinate_V)
+    Edge(T source_V, T destinate_V):p(source_V), q(destinate_V)
     {
         p->neighbors.push_back(q);
-        Graph::eLists
+        //Graph::eLists
         std::cout<< "E q is "<< q->nodeID << std::endl;        
     };
 };
 
+template <typename T>
+class Graph {
 
+   public:
+   	std::set<T> vSet;
+	std::set<T,T> eSet;
+  	//Graph(V v, E e);
+  	void BFS(T startVertex);
+  
+};
 
 int main() {
-
+	
     Vertice v0(0), v1(1), v2(2);
+    Graph<Vertice*> g;
+    g.vSet.insert(&v0);
+    g.vSet.insert(&v1);
+    g.vSet.insert(&v2);
     
 
-    E<Vertice*> 
+    Edge<Vertice*> 
 	e1(&v0, &v1),
 	e2(&v0, &v2),
 	e3(&v1, &v0),
 	e4(&v1, &v2),
 	e5(&v2, &v1),
 	e6(&v2, &v0);
+    //g.eSet.;
+    
+    
     
     v1.printList();
     v2.printList();

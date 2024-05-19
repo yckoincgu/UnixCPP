@@ -40,33 +40,45 @@ public:
 template <typename T>
 class Graph {
 
-   public:
-   	std::set<T> vSet;
+  public:
+    std::set<T> vSet;
 	std::set<Edge<T>*> eSet;
-  	void BFS(T startVertex);
+  	void bfs(T startVertex){
+		if (vSet.find(startVertex) != vSet.end()){
+			for(std::list<Vertice*>::iterator 
+				it=(*startVertex).neighbors.begin(); 
+				it!=(*startVertex).neighbors.end(); 
+				++it)
+				std::cout<<(*it)->nodeID << std::endl;
+    	};
+	}
   
 };
 
 int main() {
 	
-    Vertice v0(0), v1(1), v2(2);
+    Vertice v0(0), v1(1), v2(2), v3(3), v4(4);
     Edge<Vertice*> 
     e1(&v0, &v1),
     e2(&v0, &v2),
-    e3(&v1, &v0),
-    e4(&v1, &v2),
-    e5(&v2, &v1),
-    e6(&v2, &v0);
+    e3(&v1, &v3),
+    e4(&v1, &v4),
+    e5(&v2, &v4);
+    
     Graph<Vertice*> g;
     g.vSet.insert(&v0);
     g.vSet.insert(&v1);
-    g.vSet.insert(&v2);    
+    g.vSet.insert(&v2);
+    g.vSet.insert(&v3);
+    g.vSet.insert(&v4);
+
+
     g.eSet.insert(&e1);
     g.eSet.insert(&e2);
     g.eSet.insert(&e3);
     g.eSet.insert(&e4);
     g.eSet.insert(&e5);
-    g.eSet.insert(&e6);
+    g.bfs(&v1);
     
     
     v1.printList();

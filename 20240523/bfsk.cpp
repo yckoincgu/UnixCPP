@@ -7,11 +7,12 @@ using namespace std;
 class Vertice{
 private:
 public:
+    bool visited=false; 
     std::list<Vertice*> neighbors;
     
     int nodeID;    
     Vertice(int nodeID):nodeID(nodeID){
-      std::cout<< "A p is "<< nodeID << std::endl;
+      //std::cout<< "A p is "<< nodeID << std::endl;
     };
     
     void printList(){
@@ -46,20 +47,30 @@ class Graph {
   	void bfs(T startVertex){
   		
 		if (vSet.find(startVertex) != vSet.end()){
+      
 			findNeighbors(startVertex);
     	};
 	}
-	
-	void findNeighbors(T startVertex){
+	bool isVisited(T startVertex){
+		if((*startVertex).visited) 
+			return true; 
+	}
+	bool findNeighbors(T startVertex){
+		if (isVisited(startVertex)) return true;
+		else (*startVertex).visited=true;
+		T nextVertex;
+    	std::cout<<(*startVertex).nodeID <<" has unvisited neighbors  ";
 		for(std::list<Vertice*>::iterator 
 			it=(*startVertex).neighbors.begin(); 
 			it!=(*startVertex).neighbors.end(); 
 			++it){
-				std::cout<<(*it)->nodeID << std::endl;
-				vSet.erase(startVertex);
-				findNeighbors(it);
+				if (isVisited(*it)) continue;
+				nextVertex=*it;
+				std::cout<<(*it)->nodeID <<", ";
 			} 
-					
+		std::cout<<endl;	
+		findNeighbors(nextVertex);
+		return true;				
 	}
   
 };
@@ -90,9 +101,9 @@ int main() {
     g.bfs(&v1);
     
     
-    v1.printList();
-    v2.printList();
-    v0.printList();
+    //v1.printList();
+    //v2.printList();
+    //v0.printList();
 
     //std::cout<< "3 p is "<< v1.nodeID << std::endl;
     

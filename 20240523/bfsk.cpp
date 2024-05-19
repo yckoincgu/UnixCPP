@@ -32,8 +32,8 @@ public:
     Edge(T source_V, T destinate_V):p(source_V), q(destinate_V)
     {
         p->neighbors.push_back(q);
-        //Graph::eLists
-        std::cout<< "E q is "<< q->nodeID << std::endl;        
+        q->neighbors.push_back(p);
+        //std::cout<< "E q is "<< q->nodeID << std::endl;        
     };
 };
 
@@ -44,13 +44,18 @@ class Graph {
     std::set<T> vSet;
 	std::set<Edge<T>*> eSet;
   	void bfs(T startVertex){
+  		
 		if (vSet.find(startVertex) != vSet.end()){
-			for(std::list<Vertice*>::iterator 
-				it=(*startVertex).neighbors.begin(); 
-				it!=(*startVertex).neighbors.end(); 
-				++it)
-				std::cout<<(*it)->nodeID << std::endl;
+			findNeighbors(startVertex);
     	};
+	}
+	
+	void findNeighbors(T startVertex){
+		for(std::list<Vertice*>::iterator 
+			it=(*startVertex).neighbors.begin(); 
+			it!=(*startVertex).neighbors.end(); 
+			++it)
+			std::cout<<(*it)->nodeID << std::endl;		
 	}
   
 };

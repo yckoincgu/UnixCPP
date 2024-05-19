@@ -54,8 +54,12 @@ class Graph {
 		for(std::list<Vertice*>::iterator 
 			it=(*startVertex).neighbors.begin(); 
 			it!=(*startVertex).neighbors.end(); 
-			++it)
-			std::cout<<(*it)->nodeID << std::endl;		
+			++it){
+				std::cout<<(*it)->nodeID << std::endl;
+				vSet.erase(startVertex);
+				findNeighbors(it);
+			} 
+					
 	}
   
 };

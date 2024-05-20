@@ -41,6 +41,15 @@ public:
         q->neighbors.push_back(p);
         //std::cout<< "E q is "<< q->nodeID << std::endl;        
     };
+	void setEdgeVisited(T source_V, T destinate_V){
+		if(source_V==p && destinate_V==q) visited=true;
+	}
+	bool isEdgeVisited(T source_V, T destinate_V){
+		bool flag=false;
+		if(source_V==p && destinate_V==q)
+			if (visited==true) flag=true;
+		return flag;
+	};
 };
 
 template <typename T>

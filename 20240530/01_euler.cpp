@@ -1,6 +1,7 @@
 #include <iostream>
 #include <list>
 #include <set>
+#include<limits.h>
 /*   (*it)->nodeID   */
 using namespace std;
 
@@ -9,7 +10,7 @@ class Vertice{
 private:
 public:
     bool visited; 
-    std::list<Vertice*> neighbors;    // <Vertice*> is used as <typename T> in teh whole program
+    std::set<Vertice*> neighbors;    // <Vertice*> is used as <typename T> in teh whole program
     
     int nodeID;    
     Vertice(int nodeID):nodeID(nodeID){
@@ -19,7 +20,7 @@ public:
     
     void printList(){
     	std::cout<<"Node "<< nodeID <<" has neighbors ";
-    	for(std::list<Vertice*>::iterator 
+    	for(std::set<Vertice*>::iterator 
 		    it=neighbors.begin(); it!=neighbors.end(); it++){
 				std::cout<<(*it)->nodeID<<", ";
 			}
@@ -32,25 +33,20 @@ class Edge{
 public:
     T p,q;
     bool visited; 
-    std::list<Edge> neighborEdges;
+    std::set<T> undirectedEdge;
     
     Edge(T source_V, T destinate_V):p(source_V),  q(destinate_V)
     {
         visited=false;
-        p->neighbors.push_back(q);
-        q->neighbors.push_back(p);
+        p->neighbors.insert(q);
+        q->neighbors.insert(p);
+		undirectedEdge.insert(p); undirectedEdge.insert(q);
         //std::cout<< "E q is "<< q->nodeID << std::endl;        
     };
-	void setEdgeVisited(T source_V, T destinate_V){
-		if(source_V==p && destinate_V==q) visited=true;
-	}
-	bool isEdgeVisited(T source_V, T destinate_V){
-		bool flag=false;
-		if(source_V==p && destinate_V==q)
-			if (visited==true) flag=true;
-		return flag;
-	};
+
 };
+
+
 
 template <typename T>
 class Graph {
@@ -60,14 +56,8 @@ class Graph {
     	Use space between closing angle brackets in std::set<Edge<T> > 
 		for older compiler compatibility.
 	*/ 
-	std::set<Edge<T>* > eSet; 
-  	void euler(T startVertex){
-  		
-		if (vSet.find(startVertex) != vSet.end()){
-      
-			findEdges(startVertex);
-    	};
-	}
+	std::set<set<T> > eSet; 
+
 	bool isVerticeVisited(T startVertex){
 		bool flag;
 		if(startVertex->visited) flag=true;
@@ -93,7 +83,7 @@ class Graph {
 	}	
 	T getStartVertice(){
 		T x;
-		int min=INT_MAX;
+		unsigned long long min=UINT_MAX;
 		for(typename std::set<T>::iterator 
 			it=vSet.begin(); 
 			it!=vSet.end(); 
@@ -106,41 +96,45 @@ class Graph {
 		return x;
 	}
 	void printEulerPath(T startVertice){
-		T p,q;
+		T nextVertex;
+		std::set<T> targetEdge; 
 		for(typename std::set<T>::iterator 
 			it=vSet.begin(); 
 			it!=vSet.end(); 
 			++it)
-				if((*it)== startVertice) printEdges(startVertice, NULL);
+				if((*it)== startVertice) {
+					//std::cout<<(*startVertice).nodeID <<" has unvisited neighbors  ";
+					for(std::set<Vertice*>::iterator 
+						it=(*startVertice).neighbors.begin(); 
+						it!=(*startVertice).neighbors.end(); 
+						++it){
+							targetEdge.clear();
+							targetEdge.insert(startVertice); targetEdge.insert(*it);
+							if (eSet.find(targetEdge) != eSet.end())
+							//if (isVerticeVisited(*it)) continue;
+							nextVertex=(*it);
+							//std::cout<<nextVertex->nodeID <<", ";
+						} 
+					//std::cout<<endl;
+
+					//printEdges(startVertice, nextVertex);
+					targetEdge.clear();
+					targetEdge.insert(startVertice); targetEdge.insert(nextVertex);
+					if (eSet.find(targetEdge) != eSet.end()) {
+						printEdges(startVertice, nextVertex);
+						eSet.erase(targetEdge);
+						if(!eSet.empty()) printEulerPath(nextVertex);
+					}
+				}
 	}
 	
-	void printEdges(T startVertex, T endVertex){
-		T nextVertex;
-		if(endVertex==NULL){
-	    	std::cout<<(*startVertex).nodeID <<" has unvisited neighbors  ";
-			for(std::list<Vertice*>::iterator 
-				it=(*startVertex).neighbors.begin(); 
-				it!=(*startVertex).neighbors.end(); 
-				++it){
-					if (isVerticeVisited(*it)) continue;
-					nextVertex=(*it);
-					std::cout<<nextVertex->nodeID <<", ";
-				} 
-			std::cout<<endl;
-			std::cout
-				<<" vistited edge (" 
-				<<startVertex->nodeID
-				<<","<<nextVertex->nodeID
-				<< ")"
-				<<endl;	
-			printEdges(startVertex, nextVertex);	
-		}
-		else{
-		
-		}
-			
-		
-				
+	void printEdges(T startVertice, T endVertice){
+		std::cout
+			<<" vistited edge (" 
+			<<startVertice->nodeID
+			<<","<<endVertice->nodeID
+			<< ")"
+			<<endl;	
 	}
   
 };
@@ -150,12 +144,12 @@ int main() {
     Vertice v0(0), v1(1), v2(2), v3(3);
     
     Edge<Vertice*> 
-    e1(&v0, &v1),
-    e2(&v0, &v2),
-    e3(&v1, &v2),
-    e4(&v2, &v3);
-    v0.printList();
-    v1.printList();
+    e1(&v0, &v1), e11(&v1, &v0),
+    e2(&v0, &v2), e12(&v2, &v0),
+    e3(&v1, &v2), e13(&v2, &v1),
+    e4(&v2, &v3), e14(&v3, &v2);
+    //v0.printList();
+    //v1.printList();
     
     
     Graph<Vertice*> g;
@@ -166,16 +160,19 @@ int main() {
     
 
 
-    g.eSet.insert(&e1);
-    g.eSet.insert(&e2);
-    g.eSet.insert(&e3);
-    g.eSet.insert(&e4);
+    g.eSet.insert(e1.undirectedEdge); g.eSet.insert(e11.undirectedEdge);
+    g.eSet.insert(e2.undirectedEdge); g.eSet.insert(e12.undirectedEdge);
+    g.eSet.insert(e3.undirectedEdge); g.eSet.insert(e13.undirectedEdge);
+    g.eSet.insert(e4.undirectedEdge); g.eSet.insert(e14.undirectedEdge);
+
+
+
 	Vertice* x;
 	if(g.isEulerPath()){
 		x=g.getStartVertice();
-    	std::cout<<"Double check the start vertice "<< x->nodeID <<endl;
-    	g.printEulerPath(x);
-	}
+    	//std::cout<<"Double check the start vertice "<< x->nodeID <<endl;
+    	g.printEulerPath(x);}
+	else std::cout<<"This is not a euler path"<<endl;
     
 
 

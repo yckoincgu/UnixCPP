@@ -30,7 +30,7 @@ class Edge{
 public:
     T p,q;
     bool visited=false; 
-    std::list<Edge<T>*> neighborEdges;
+    std::list<Edge<T>* > neighborEdges;
     
     Edge(T source_V, T destinate_V):p(source_V), q(destinate_V)
     {
@@ -44,7 +44,7 @@ template <typename T>
 class Graph {
 	public:
     std::set<T> vSet;
-	  std::set<Edge<T>*> eSet;
+	std::set<Edge<T>* > eSet;
   	void euler(T startVertex){
   		
 		if (vSet.find(startVertex) != vSet.end()){
@@ -56,6 +56,23 @@ class Graph {
 		if((*startVertex).visited) 
 			return true; 
 	}
+	bool isEulerPath(){
+		bool flag=false;
+		int oddVerticeNumber=0;
+		for(std::set<Edge<T>* >::iterator 
+			it=eSet.begin(); 
+			it!=eSet.end(); 
+			++it){
+				if(eSet.size() % 2 != 0) oddVerticeNumber++;
+			} 
+		if(oddVerticeNumber % 2 == 0) {
+			flag=true;
+			std::cout<<"This graph is an euler path" <<endl;
+		}
+		retrun flag;
+			
+	}
+	
 	bool findEdges(T startVertex){
 		if (isVisited(startVertex)) return true;
 		else (*startVertex).visited=true;
@@ -99,8 +116,8 @@ int main() {
     g.eSet.insert(&e2);
     g.eSet.insert(&e3);
     g.eSet.insert(&e4);
-
-    g.euler(&v1);
+	g.isEulerPath();
+    //g.euler(&v1);
     
     
 

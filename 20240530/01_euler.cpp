@@ -41,22 +41,13 @@ public:
         q->neighbors.push_back(p);
         //std::cout<< "E q is "<< q->nodeID << std::endl;        
     };
-    // Overload the less-than operator for comparison
-    bool operator<(const Edge<T>& other) const {
-        if (p->nodeID != other.p->nodeID) {
-            return p->nodeID < other.p->nodeID;
-        }
-        return q->nodeID < other.q->nodeID;
-    }    
-
-
 };
 
 template <typename T>
 class Graph {
 	public:
     std::set<T> vSet;
-    /*
+    /*	std::set<Edge<T>* > eSet; 
     	Use space between closing angle brackets in std::set<Edge<T> > 
 		for older compiler compatibility.
 	*/ 
@@ -68,11 +59,54 @@ class Graph {
 			findEdges(startVertex);
     	};
 	}
-	bool isVisited(T startVertex){
-		return true; 
+	bool isVerticeVisited(T startVertex){
+		bool flag;
+		if(startVertex->visited) flag=true;
+		return flag; 
 	}
-	bool findEdges(T startVertex){
-		if (isVisited(startVertex)) return true;
+	bool isEulerPath(){
+		bool flag=false;
+		int oddVerticeNumber=0;
+		for(typename std::set<T>::iterator 
+			it=vSet.begin(); 
+			it!=vSet.end(); 
+			++it)
+				if((*it)->neighbors.size() % 2 != 0) oddVerticeNumber++;
+			 
+		std::cout<<"oddVerticeNumber is " << oddVerticeNumber<< endl;	
+		if(oddVerticeNumber % 2 == 0) {
+			flag=true;
+			std::cout<<"This graph is an euler path" <<endl;
+		}
+		
+		return flag;
+			
+	}	
+	T getStartVertice(){
+		T x;
+		int min=INT_MAX;
+		for(typename std::set<T>::iterator 
+			it=vSet.begin(); 
+			it!=vSet.end(); 
+			++it)
+				if((*it)->neighbors.size() % 2 != 0 && min > (*it)->neighbors.size()) {
+					min=(*it)->neighbors.size();
+					x=(*it);
+				}
+		std::cout<<"The start vertice is "<< x->nodeID <<endl;
+		return x;
+	}
+	void printEulerPath(T startVertice){
+		T p,q;
+		for(typename std::set<T>::iterator 
+			it=vSet.begin(); 
+			it!=vSet.end(); 
+			++it)
+				if((*it)== startVertice) printEdges(startVertice);
+	}
+	
+	bool printEdges(T startVertex){
+		if (isVerticeVisited(startVertex)) return true;
 		else (*startVertex).visited=true;
 		T nextVertex;
     	std::cout<<(*startVertex).nodeID <<" has unvisited neighbors  ";
@@ -80,12 +114,19 @@ class Graph {
 			it=(*startVertex).neighbors.begin(); 
 			it!=(*startVertex).neighbors.end(); 
 			++it){
-				if (isVisited(*it)) continue;
-				nextVertex=*it;
-				std::cout<<(*it)->nodeID <<", ";
+				if (isVerticeVisited(*it)) continue;
+				nextVertex=(*it);
+				std::cout<<nextVertex->nodeID <<", ";
 			} 
-		std::cout<<endl;	
-		findEdges(nextVertex);
+		std::cout<<endl;
+		std::cout
+			<<" vistited edge (" 
+			<<startVertex->nodeID
+			<<","<<nextVertex->nodeID
+			<< ")"
+			<<endl;	
+			
+		printEdges(nextVertex);
 		return true;				
 	}
   
@@ -116,9 +157,12 @@ int main() {
     g.eSet.insert(&e2);
     g.eSet.insert(&e3);
     g.eSet.insert(&e4);
-
-    //g.euler(&v1);
-    
+	Vertice* x;
+	if(g.isEulerPath()){
+		x=g.getStartVertice();
+    	std::cout<<"Double check the start vertice "<< x->nodeID <<endl;
+    	g.printEulerPath(x);
+	}
     
 
 

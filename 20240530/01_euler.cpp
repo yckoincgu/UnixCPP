@@ -111,32 +111,36 @@ class Graph {
 			it=vSet.begin(); 
 			it!=vSet.end(); 
 			++it)
-				if((*it)== startVertice) printEdges(startVertice);
+				if((*it)== startVertice) printEdges(startVertice, NULL);
 	}
 	
-	bool printEdges(T startVertex){
-		if (isVerticeVisited(startVertex)) return true;
-		else (*startVertex).visited=true;
+	void printEdges(T startVertex, T endVertex){
 		T nextVertex;
-    	std::cout<<(*startVertex).nodeID <<" has unvisited neighbors  ";
-		for(std::list<Vertice*>::iterator 
-			it=(*startVertex).neighbors.begin(); 
-			it!=(*startVertex).neighbors.end(); 
-			++it){
-				if (isVerticeVisited(*it)) continue;
-				nextVertex=(*it);
-				std::cout<<nextVertex->nodeID <<", ";
-			} 
-		std::cout<<endl;
-		std::cout
-			<<" vistited edge (" 
-			<<startVertex->nodeID
-			<<","<<nextVertex->nodeID
-			<< ")"
-			<<endl;	
+		if(endVertex==NULL){
+	    	std::cout<<(*startVertex).nodeID <<" has unvisited neighbors  ";
+			for(std::list<Vertice*>::iterator 
+				it=(*startVertex).neighbors.begin(); 
+				it!=(*startVertex).neighbors.end(); 
+				++it){
+					if (isVerticeVisited(*it)) continue;
+					nextVertex=(*it);
+					std::cout<<nextVertex->nodeID <<", ";
+				} 
+			std::cout<<endl;
+			std::cout
+				<<" vistited edge (" 
+				<<startVertex->nodeID
+				<<","<<nextVertex->nodeID
+				<< ")"
+				<<endl;	
+			printEdges(startVertex, nextVertex);	
+		}
+		else{
+		
+		}
 			
-		printEdges(nextVertex);
-		return true;				
+		
+				
 	}
   
 };

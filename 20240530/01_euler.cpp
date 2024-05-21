@@ -11,14 +11,14 @@ private:
 public:
     bool visited; 
     std::set<Vertice*> neighbors;    // <Vertice*> is used as <typename T> in teh whole program
-    
-    int nodeID;    
+    int nodeID;  
+
     Vertice(int nodeID):nodeID(nodeID){
       visited=false;
       std::cout<< "vertics is "<< nodeID << std::endl;
     };
     
-    void printList(){
+    void printVerticeNeighbors(){
     	std::cout<<"Node "<< nodeID <<" has neighbors ";
     	for(std::set<Vertice*>::iterator 
 		    it=neighbors.begin(); it!=neighbors.end(); it++){
@@ -32,12 +32,10 @@ template <typename T>
 class Edge{
 public:
     T p,q;
-    bool visited; 
     std::set<T> undirectedEdge;
     
     Edge(T source_V, T destinate_V):p(source_V),  q(destinate_V)
     {
-        visited=false;
         p->neighbors.insert(q);
         q->neighbors.insert(p);
 		undirectedEdge.insert(p); undirectedEdge.insert(q);
@@ -56,7 +54,7 @@ class Graph {
     	Use space between closing angle brackets in std::set<Edge<T> > 
 		for older compiler compatibility.
 	*/ 
-	std::set<set<T> > eSet; 
+	std::set<set<T> > eSet; // containing undirected edges with 2 vertices
 
 	bool isVerticeVisited(T startVertex){
 		bool flag;
@@ -148,8 +146,8 @@ int main() {
     e2(&v0, &v2), e12(&v2, &v0),
     e3(&v1, &v2), e13(&v2, &v1),
     e4(&v2, &v3), e14(&v3, &v2);
-    //v0.printList();
-    //v1.printList();
+    //v0.printVerticeNeighbors();
+    //v1.printVerticeNeighbors();
     
     
     Graph<Vertice*> g;

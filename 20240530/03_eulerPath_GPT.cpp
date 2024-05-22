@@ -25,7 +25,7 @@ public:
 
     void printNeighbors() const {
         std::cout << "Node " << nodeID << " has neighbors ";
-        for (auto neighbor : neighbors) {
+        for (Vertice neighbor : neighbors) {
             std::cout << neighbor->nodeID << ", ";
         }
         std::cout << std::endl;
@@ -131,5 +131,8 @@ int main() {
         std::cout << "This graph does not have an Euler path" << std::endl;
     }
 
+
+    int i;
+    std:cin>>i;
     return 0;
 }

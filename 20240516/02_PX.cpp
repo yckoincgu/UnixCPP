@@ -10,7 +10,7 @@ class Mobject
 {
 public:
 	T A;		// the first type of matrix
-	int n, m;	//rows=n; Bolumns=m;
+	int n, m;	// rows=n; columns=m;
 	Mobject(int n, int m):n(n),m(m){
 		A=new int*[n];
 		for(int i=0; i< n; i++)

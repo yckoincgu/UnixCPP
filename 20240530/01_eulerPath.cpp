@@ -10,7 +10,11 @@ class Vertice{
 private:
 public:
     bool visited; 
-    std::set<Vertice*> neighbors;    // <Vertice*> is used as <typename T> in teh whole program
+    std::set<Vertice*> neighbors;    // knowledge set
+	/* <Vertice*> is used as <typename T> in teh whole program
+		templates provide type safety and flexibility 
+		raw pointers is efficient
+	*/
     int nodeID;  
 
     Vertice(int nodeID):nodeID(nodeID){
@@ -20,10 +24,9 @@ public:
     
     void printVerticeNeighbors(){
     	std::cout<<"Node "<< nodeID <<" has neighbors ";
-    	for(std::set<Vertice*>::iterator 
-		    it=neighbors.begin(); it!=neighbors.end(); it++){
-				std::cout<<(*it)->nodeID<<", ";
-			}
+    	for(std::set<Vertice*>::iterator it=neighbors.begin(); it!=neighbors.end(); it++)
+			std::cout<<(*it)->nodeID<<", ";
+		
 		std::cout<<std::endl;	
 	}
 };
@@ -32,7 +35,7 @@ template <typename T>
 class Edge{
 public:
     T p,q;
-    std::set<T> undirectedEdge;	// no directions
+    std::set<T> undirectedEdge;	// no directions, data structure
     
     Edge(T source_V, T destinate_V):p(source_V),  q(destinate_V)
     {
@@ -57,14 +60,11 @@ class Graph {
 	std::set<set<T> > eSet; // containing undirected edges with 2 vertices
 
 	
-	bool isEulerPath(){
+	bool isEulerPath(){		// definition
 		bool flag=false;
 		int oddVerticeNumber=0;
-		for(typename std::set<T>::iterator 
-			it=vSet.begin(); 
-			it!=vSet.end(); 
-			++it)
-				if((*it)->neighbors.size() % 2 != 0) oddVerticeNumber++;
+		for(typename std::set<T>::iterator it=vSet.begin(); it!=vSet.end(); ++it)
+			if((*it)->neighbors.size() % 2 != 0) oddVerticeNumber++;
 			 
 		std::cout<<"oddVerticeNumber is " << oddVerticeNumber<< endl;	
 		if(oddVerticeNumber % 2 == 0) {
@@ -75,52 +75,36 @@ class Graph {
 		return flag;
 			
 	}	
-	T getStartVertice(){
+	T getStartVertice(){	// definition
 		T x;
 		unsigned long long min=UINT_MAX;
-		for(typename std::set<T>::iterator 
-			it=vSet.begin(); 
-			it!=vSet.end(); 
-			++it)
-				if((*it)->neighbors.size() % 2 != 0 && min > (*it)->neighbors.size()) {
-					min=(*it)->neighbors.size();
-					x=(*it);
-				}
+		for(typename std::set<T>::iterator it=vSet.begin(); it!=vSet.end(); ++it)
+			if((*it)->neighbors.size() % 2 != 0 && min > (*it)->neighbors.size()) {
+				min=(*it)->neighbors.size();
+				x=(*it);
+			}
 		std::cout<<"The start vertice is "<< x->nodeID <<endl;
 		return x;
 	}
-	void printEulerPath(T startVertice){
-		T nextVertex;
-		std::set<T> targetEdge; 
-		for(typename std::set<T>::iterator 
-			it=vSet.begin(); 
-			it!=vSet.end(); 
-			++it)
-				if((*it)== startVertice) {
-					//std::cout<<(*startVertice).nodeID <<" has unvisited neighbors  ";
-					for(std::set<Vertice*>::iterator 
-						it=(*startVertice).neighbors.begin(); 
-						it!=(*startVertice).neighbors.end(); 
-						++it){
-							targetEdge.clear();
-							targetEdge.insert(startVertice); targetEdge.insert(*it);
-							if (eSet.find(targetEdge) != eSet.end())
-							
-							nextVertex=(*it);
-							//std::cout<<nextVertex->nodeID <<", ";
-						} 
-					//std::cout<<endl;
-
-					//printEdges(startVertice, nextVertex);
+	void printEulerPath(T startVertice){	// design based on definition
+		T nextVertex;	// operation space
+		std::set<T> targetEdge; // knowledge set
+		for(typename std::set<T>::iterator it=vSet.begin(); it!=vSet.end(); ++it)
+			if((*it)== startVertice) {
+				//std::cout<<(*startVertice).nodeID <<" has unvisited neighbors  ";
+				for(std::set<Vertice*>::iterator it=(*startVertice).neighbors.begin(); it!=(*startVertice).neighbors.end(); ++it){
 					targetEdge.clear();
-					targetEdge.insert(startVertice); targetEdge.insert(nextVertex);
-					if (eSet.find(targetEdge) != eSet.end()) {
-						printEdges(startVertice, nextVertex);
-						eSet.erase(targetEdge);
-						if(!eSet.empty()) printEulerPath(nextVertex);
-					}
-				}
-	}
+					targetEdge.insert(startVertice); targetEdge.insert(*it);
+					if (eSet.find(targetEdge) != eSet.end()) {nextVertex=(*it); break;}
+					//std::cout<<nextVertex->nodeID <<", ";
+				} 
+				//std::cout<<endl;
+			}
+			printEdges(startVertice, nextVertex);
+			eSet.erase(targetEdge);
+			if(!eSet.empty()) printEulerPath(nextVertex);
+
+		}
 	
 	void printEdges(T startVertice, T endVertice){
 		std::cout

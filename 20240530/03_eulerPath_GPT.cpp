@@ -25,7 +25,7 @@ public:
 
     void printNeighbors() const {
         std::cout << "Node " << nodeID << " has neighbors ";
-        for (Vertice neighbor : neighbors) {
+        for (Vertice* neighbor : neighbors) {
             std::cout << neighbor->nodeID << ", ";
         }
         std::cout << std::endl;

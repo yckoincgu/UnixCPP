@@ -10,7 +10,11 @@ class Vertice{
 private:
 public:
     bool visited; 
-    std::set<Vertice*> neighbors;    // <Vertice*> is used as <typename T> in teh whole program
+    std::set<Vertice*> neighbors;    
+	/* <Vertice*> is used as <typename T> in teh whole program
+		templates provide type safety and flexibility 
+		raw pointers is efficient
+	*/
     int nodeID;  
 
     Vertice(int nodeID):nodeID(nodeID){
@@ -32,7 +36,7 @@ template <typename T>
 class Edge{
 public:
     T p,q;
-    std::set<T> undirectedEdge;
+    std::set<T> undirectedEdge;	// no directions
     
     Edge(T source_V, T destinate_V):p(source_V),  q(destinate_V)
     {
@@ -50,17 +54,13 @@ template <typename T>
 class Graph {
 	public:
     std::set<T> vSet;
-    /*	std::set<Edge<T>* > eSet; 
+    /*	std::set<Edge<T>* > eSet;   std::set<Edge<T> > eSet; 
     	Use space between closing angle brackets in std::set<Edge<T> > 
 		for older compiler compatibility.
 	*/ 
 	std::set<set<T> > eSet; // containing undirected edges with 2 vertices
 
-	bool isVerticeVisited(T startVertex){
-		bool flag;
-		if(startVertex->visited) flag=true;
-		return flag; 
-	}
+	
 	bool isEulerPath(){
 		bool flag=false;
 		int oddVerticeNumber=0;

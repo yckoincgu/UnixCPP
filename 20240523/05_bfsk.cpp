@@ -41,15 +41,12 @@ public:
 template <typename T>
 class Graph {
 	public:
-    std::set<T> vSet;
-	std::set<Edge<T>*> eSet;
-  	void bfs(T startVertex){
-  		
-		if (vSet.find(startVertex) != vSet.end()){
-      
-			findNeighbors(startVertex);
-    	};
+  std::set<T> vSet;
+  std::set<Edge<T>*> eSet;
+  void bfs(T startVertex){
+		  if (vSet.find(startVertex) != vSet.end()) findNeighbors(startVertex);
 	}
+  
 	bool isVisited(T startVertex){
 		if((*startVertex).visited) 
 			return true; 

@@ -1,92 +1,85 @@
 #include <iostream>
 #include <list>
 #include <set>
+#include <queue>
 
 using namespace std;
 
 class Vertice {
 public:
     bool visited = false;
-    std::list<Vertice*> neighbors;
+    list<Vertice*> neighbors;
     int nodeID;
 
     Vertice(int nodeID) : nodeID(nodeID) {}
 
     void printList() {
-        std::cout << "Node " << nodeID << " has neighbors ";
-        for (Vertice* neighbor : neighbors) {
-            std::cout << neighbor->nodeID << ", ";
+        cout << "Node " << nodeID << " has neighbors ";
+        for (auto it = neighbors.begin(); it != neighbors.end(); it++) {
+            cout << (*it)->nodeID << ", ";
         }
-        std::cout << std::endl;
+        cout << endl;
     }
 };
 
-template <typename T>
 class Edge {
 public:
-    T source, destination;
+    Vertice* p;
+    Vertice* q;
 
-    Edge(T source, T destination) : source(source), destination(destination) {
-        source->neighbors.push_back(destination);
-        destination->neighbors.push_back(source);
+    Edge(Vertice* source_V, Vertice* destinate_V) : p(source_V), q(destinate_V) {
+        p->neighbors.push_back(q);
+        q->neighbors.push_back(p);
     }
 };
 
-template <typename T>
 class Graph {
 public:
-    std::set<T> vertices;
-    std::set<Edge<T>*> edges;
+    set<Vertice*> vSet;
+    set<Edge*> eSet;
 
-    void bfs(T startVertex) {
-        if (vertices.find(startVertex) != vertices.end()) {
-            findNeighbors(startVertex);
-        }
-    }
+    void bfs(Vertice* startVertex) {
+        if (vSet.find(startVertex) == vSet.end()) return;
+        
+        queue<Vertice*> q;
+        startVertex->visited = true;
+        q.push(startVertex);
 
-private:
-    bool isVisited(T vertex) {
-        return vertex->visited;
-    }
+        while (!q.empty()) {
+            Vertice* current = q.front();
+            q.pop();
+            cout << "Visited vertex " << current->nodeID << endl;
 
-    void findNeighbors(T vertex) {
-        if (isVisited(vertex)) return;
-
-        vertex->visited = true;
-        std::cout << "Visited vertex " << vertex->nodeID << std::endl;
-
-        std::list<Vertice*> neighborsToVisit;
-        for (Vertice* neighbor : vertex->neighbors) {
-            if (!isVisited(neighbor)) {
-                neighborsToVisit.push_back(neighbor);
+            for (auto neighbor : current->neighbors) {
+                if (!neighbor->visited) {
+                    neighbor->visited = true;
+                    q.push(neighbor);
+                }
             }
-        }
-
-        for (Vertice* neighbor : neighborsToVisit) {
-            findNeighbors(neighbor);
         }
     }
 };
 
 int main() {
-    Vertice v0(0), v1(1), v2(2), v3(3), v4(4);
-    Edge<Vertice*> e1(&v0, &v1), e2(&v0, &v2), e3(&v1, &v3), e4(&v1, &v4), e5(&v2, &v4);
+    Vertice v0(0), v1(1), v2(2), v3(3), v4(4), v5(5);
+    Edge e1(&v0, &v1), e2(&v0, &v2), e3(&v1, &v3), e4(&v1, &v4), e5(&v2, &v4), e6(&v3, &v5);
 
-    Graph<Vertice*> graph;
-    graph.vertices.insert(&v0);
-    graph.vertices.insert(&v1);
-    graph.vertices.insert(&v2);
-    graph.vertices.insert(&v3);
-    graph.vertices.insert(&v4);
+    Graph g;
+    g.vSet.insert(&v0);
+    g.vSet.insert(&v1);
+    g.vSet.insert(&v2);
+    g.vSet.insert(&v3);
+    g.vSet.insert(&v4);
+    g.vSet.insert(&v5);
 
-    graph.edges.insert(&e1);
-    graph.edges.insert(&e2);
-    graph.edges.insert(&e3);
-    graph.edges.insert(&e4);
-    graph.edges.insert(&e5);
+    g.eSet.insert(&e1);
+    g.eSet.insert(&e2);
+    g.eSet.insert(&e3);
+    g.eSet.insert(&e4);
+    g.eSet.insert(&e5);
+    g.eSet.insert(&e6);
 
-    graph.bfs(&v1);
+    g.bfs(&v1);
 
     return 0;
 }
-

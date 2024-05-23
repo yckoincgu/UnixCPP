@@ -3,6 +3,7 @@
 	   that can work with a wide range of data types
 	2. enabling you to define functions, classes, and methods 
 	   that can operate on a variety of data types 
+	   It allows to store a sequence of elements that can grow or shrink in size.
 	   without having to duplicate code for each type
 	3. Please check its definition https://chat.openai.com/c/aa5983b2-5c1a-45ec-aac0-1fc4212ebfec 
 	4. templates declaration, 

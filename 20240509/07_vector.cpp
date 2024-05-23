@@ -3,6 +3,7 @@
 
 // std::vector is a template class from the Standard Library for dynamic arrays
 // <int> specifies that it's a vector of integers
+// allowing you to store a sequence of elements that can grow or shrink in size.
 void printVectorNumbers(std::vector<int> numbers){
     numbers.push_back(10);
     numbers.push_back(20);

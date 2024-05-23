@@ -71,8 +71,8 @@ class AxB{
 }; 
 
 int main() {
-	Mobject<int**> a(3,5);
-	Mobject<int**> b(5,3);
+	Mobject<int**> a(6,5);
+	Mobject<int**> b(5,6);
 	
 	AxB<int**> c(a,b);
 

@@ -40,7 +40,7 @@ public:
 
 template <typename T>
 class Graph {
-	public:
+  public:
   std::set<T> vSet;
   std::set<Edge<T>*> eSet;
   void bfs(T startVertex){
@@ -53,19 +53,19 @@ class Graph {
 	}
 	bool findNeighbors(T startVertex){
 		if (isVisited(startVertex)) return true;
-		else (*startVertex).visited=true;
+		
+		std::list<Vertice*> theRest;
+		(*startVertex).visited=true;
 		T nextVertex;
-    	std::cout<<(*startVertex).nodeID <<" has unvisited neighbors  ";
-		for(std::list<Vertice*>::iterator 
-			it=(*startVertex).neighbors.begin(); 
-			it!=(*startVertex).neighbors.end(); 
-			++it){
+		
+    	std::cout<< "visited vertice "<< (*startVertex).nodeID<<endl;;
+		for(std::list<Vertice*>::iterator it=(*startVertex).neighbors.begin(); it!=(*startVertex).neighbors.end(); ++it){
 				if (isVisited(*it)) continue;
-				nextVertex=*it;
-				std::cout<<(*it)->nodeID <<", ";
+				theRest.push_back(*it); //std::cout<<(*it)->nodeID <<" ";
 			} 
-		std::cout<<endl;	
-		findNeighbors(nextVertex);
+		for(std::list<Vertice*>::iterator it=(theRest).begin(); it!=(theRest).end(); ++it)
+			findNeighbors(*it);
+		
 		return true;				
 	}
   
@@ -95,17 +95,7 @@ int main() {
     g.eSet.insert(&e4);
     g.eSet.insert(&e5);
     g.bfs(&v1);
-    
-    
-    //v1.printList();
-    //v2.printList();
-    //v0.printList();
-
-    //std::cout<< "3 p is "<< v1.nodeID << std::endl;
-    
-    //std::cout<< "3 q is "<< v2. << std::endl;
-
-
+  
     int i;
     std::cin >> i;
  

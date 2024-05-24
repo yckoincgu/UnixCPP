@@ -6,12 +6,12 @@
 #include <iostream>
 
 template <typename T>
-class Mobject
+class Matrix
 {
 public:
 	T A;		// the first type of matrix
 	int n, m;	// rows=n; columns=m;
-	Mobject(int n, int m):n(n),m(m){
+	Matrix(int n, int m):n(n),m(m){
 		A=new int*[n];
 		for(int i=0; i< n; i++)
 			A[i]=new int[m];
@@ -44,14 +44,14 @@ class AxB{
 	public:
 	T C; 	// the second type of matrix
 	int n,m,p;
-	AxB(Mobject<T> a, Mobject<T> b){
+	AxB(Matrix<T> a, Matrix<T> b){
 		a.printMatrixDimension();
 		a.printMatrix();
 		b.printMatrixDimension();
 		b.printMatrix();
 		
 		n=a.n; m=b.m;
-		Mobject<int**> c(n,m);
+		Matrix<int**> c(n,m);
 		T A=a.A, B=b.A; C=c.A;
 		for(int i=0; i<a.n; i++){
 			for(int j=0; j<b.m; j++){
@@ -71,8 +71,8 @@ class AxB{
 }; 
 
 int main() {
-	Mobject<int**> a(6,5);
-	Mobject<int**> b(5,6);
+	Matrix<int**> a(6,5);
+	Matrix<int**> b(5,6);
 	
 	AxB<int**> c(a,b);
 

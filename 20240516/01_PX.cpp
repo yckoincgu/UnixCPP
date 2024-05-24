@@ -6,12 +6,12 @@
 #include <iostream>
 
 template <typename T>
-class Mobject
+class Matrix
 {
 public:
 	T A;		// the first type of matrix
 	int n, m;	// rows=n; columns=m;
-	Mobject(int n, int m):n(n),m(m){
+	Matrix(int n, int m):n(n),m(m){
 		A=new int*[n];
 		for(int i=0; i< n; i++)
 			A[i]=new int[m];
@@ -41,8 +41,8 @@ public:
 };
 
 int main() {
-	Mobject<int**> a(3,5);
-	Mobject<int**> b(5,3);
+	Matrix<int**> a(3,5);
+	Matrix<int**> b(5,3);
 	
 	a.deleteMatrix();
 	b.deleteMatrix();

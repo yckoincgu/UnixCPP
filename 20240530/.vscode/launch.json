@@ -13,6 +13,7 @@
       "console": "externalTerminal"
     },
     {
+      "preLaunchTask": "build", // added for project
       "name": "C/C++ Runner: Debug Session",
       "type": "cppdbg",
       "request": "launch",

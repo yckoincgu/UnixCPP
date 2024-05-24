@@ -58,7 +58,6 @@ public:
                     std::cout<< "e2(" << (*e2)->p->nodeID<<"," <<(*e2)->q->nodeID<<"), ";
                 }
             }
-
             std::cout<<  std::endl;
         }
     }
@@ -66,9 +65,7 @@ public:
 
 int main() {
     Vertice v0(0), v1(1), v2(2), v3(3), v4(4);
-
     Edge<Vertice*> e1(&v0, &v1), e2(&v0, &v2), e3(&v1, &v3), e4(&v1, &v4), e5(&v2, &v4);
-    //v0.printList();
 
     Graph<Vertice*> g;
     g.vSet.insert(&v0);

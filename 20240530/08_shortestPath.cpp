@@ -12,7 +12,7 @@ public:
     std::set<Vertice*> neighbors;
     int nodeID;
     Vertice(int nodeID) : nodeID(nodeID) {}
-
+    Vertice() {}
     void printList() {
         std::cout << "Node " << nodeID << " has neighbors ";
         for (auto it = neighbors.begin(); it != neighbors.end(); ++it) {
@@ -27,11 +27,13 @@ class Edge {
 public:
     T p, q;
     std::set<Edge*> neighbors;
+    int distance;
     bool visited=false;
     Edge(T source_V, T destinate_V) : p(source_V), q(destinate_V) {
         p->neighbors.insert(q);
         q->neighbors.insert(p);
     }
+    Edge(){}
 
     void printEdgeNeighbors() {
         std::cout << "(" << p->nodeID << ", " << q->nodeID << ") has neighbors: ";
@@ -83,10 +85,27 @@ int main() {
     Matrix<int> A(rowCount, columnCount);
     A.printMatrix();
     
+    Vertice node[rowCount];
+    for(int i=0; i< rowCount; i++){
+        node[i].nodeID=i;
+    }
 
-
-    Vertice node(1);
+    Graph<Vertice*> g;        
+    vector<vector<Edge<Vertice*>*>> edges(rowCount, vector<Edge<Vertice*>*>(columnCount, nullptr));
     
+    for (int i = 0; i < rowCount; ++i) {
+        for (int j = i + 1; j < columnCount; ++j) { // avoid duplicate edges and self-loops
+            edges[i][j] = new Edge<Vertice*>(&node[i], &node[j]);
+            edges[i][j]->distance=mat[i][j];
+            g.eSet.insert(edges[i][j]);
+
+        }
+    }
+
+    g.buildEdgeNeighbors();
+    
+
+
      //v0(0), v1(1), v2(2), v3(3), v4(4);
     //Edge<Vertice*> e1(&v0, &v1), e2(&v0, &v2), e3(&v1, &v3), e4(&v1, &v4), e5(&v2, &v4);
 

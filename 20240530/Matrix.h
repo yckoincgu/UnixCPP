@@ -6,19 +6,19 @@
 template <typename T>
 class Matrix {
 public:
-    T **A;     // Pointer to a 2D array (matrix)
+    T **matrix;     // Pointer to a 2D array (matrix)
     int n, m;  // Rows = n, Columns = m
 
     // Constructor to initialize the matrix with dimensions n x m
     Matrix(int n, int m) : n(n), m(m) {
-        A = new T*[n];
+        matrix = new T*[n];
         for (int i = 0; i < n; ++i) {
-            A[i] = new T[m];
+            matrix[i] = new T[m];
         }
         int k = 0;
         for (int i = 0; i < n; ++i) {
             for (int j = 0; j < m; ++j) {
-                A[i][j] = k++;
+                matrix[i][j] = k++;
             }
         }
     }
@@ -26,9 +26,9 @@ public:
     // Destructor to delete dynamically allocated memory
     ~Matrix() {
         for (int i = 0; i < n; ++i) {
-            delete[] A[i];
+            delete[] matrix[i];
         }
-        delete[] A;
+        delete[] matrix;
     }
 
     // Print matrix dimensions
@@ -41,7 +41,7 @@ public:
         std::cout << "Matrix elements:" << std::endl;
         for (int i = 0; i < n; ++i) {
             for (int j = 0; j < m; ++j) {
-                std::cout << A[i][j] << " ";
+                std::cout << matrix[i][j] << " ";
             }
             std::cout << std::endl;
         }
@@ -73,7 +73,7 @@ public:
             for (int j = 0; j < p; ++j) {
                 C[i][j] = 0;
                 for (int k = 0; k < a.m; ++k) {
-                    C[i][j] += a.A[i][k] * b.A[k][j];
+                    C[i][j] += a.matrix[i][k] * b.matrix[k][j];
                 }
             }
         }

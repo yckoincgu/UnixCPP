@@ -4,7 +4,7 @@
 #include <set>
 #include<queue>
 #include <climits>
-
+int superInt=INT_MAX/10;
 
 using namespace std;
 
@@ -19,7 +19,7 @@ public:
     Vertice() {}
     void printList() {
         std::cout << "Node " << nodeID << " has neighbors ";
-        for (auto it = neighbors.begin(); it != neighbors.end(); ++it) {
+        for (std::set<Vertice*>::iterator it = neighbors.begin(); it != neighbors.end(); ++it) {
             std::cout << (*it)->nodeID << ", ";
         }
         std::cout << std::endl;
@@ -31,21 +31,21 @@ class Edge {
 public:
     T p, q;
     std::set<Edge*> neighbors;
-    std::set<T> signature;
+    std::set<T> elements;
     int distance;
     bool visited=false;
 
     Edge(T source_V, T destinate_V) : p(source_V), q(destinate_V) {
         p->neighbors.insert(q);
         q->neighbors.insert(p);
-        signature.insert(p);
-        signature.insert(q);
+        elements.insert(p);
+        elements.insert(q);
     }
     Edge(){}
 
     void printEdgeNeighbors() {
         std::cout << "(" << p->nodeID << ", " << q->nodeID << ") has neighbors: ";
-        for (auto e = neighbors.begin(); e != neighbors.end(); ++e) {
+        for (typename std::set<Edge<T>*>::iterator e = neighbors.begin(); e != neighbors.end(); ++e) {
             std::cout << "(" << (*e)->p->nodeID << ", " << (*e)->q->nodeID << ") ";
         }
         std::cout << std::endl;
@@ -57,22 +57,45 @@ class Graph {
 public:
     std::set<T> vSet;
     std::set<Edge<T>*> eSet;
+    Vertice* node=nullptr;
+    Edge<Vertice*>** edges=nullptr;
+    int rowCount, columnCount;
+
+    std::set<T> makeEdgeSignature(T startVertice, T endVertice){
+        std::set<T> edgeSignature;
+        edgeSignature.insert(startVertice); 
+        edgeSignature.insert(endVertice); 
+        return edgeSignature;
+
+    };
     
     int getEdgeDistance(T startVertice, T endVertice){
-        int edgeDistance=INT_MAX / 2;       // a value beyond scope
-        std::set<T> searchEdge;
-        searchEdge.insert(startVertice); 
-        searchEdge.insert(endVertice); 
-        for(typename std::set<Edge<T>*>::iterator targetEdge=eSet.begin(); targetEdge != eSet.end(); ++targetEdge)
-            if( (*targetEdge)->signature == searchEdge) edgeDistance=(*targetEdge)->distance;
+        int edgeDistance=superInt;       // a value beyond scope
+        bool flag=false;
+        std::cout << "edges[" << startVertice->nodeID << "," << endVertice->nodeID << std::endl;
+        if(endVertice->shortestDistanceFromStart == superInt) return superInt;
+        for (int i = 0; i < rowCount; i++) {
+            //std::cout << "edges row i = " << i << std::endl;
+            for (int j = 0; j < columnCount; j++) { // avoid duplicate edges and self-loops
+                //std::cout << "edges column j = " << j << std::endl;
+                if(edges[i][j].p == startVertice && edges[i][j].q == endVertice){
+                    edgeDistance=edges[i][j].distance;
+                    flag=true;
+                    std::cout << "edges[" << i << "," << j << "] distance = " <<edgeDistance<< std::endl;
 
+                }
+                }
+            if(flag==true) break;
+        }
+            //std::cout << "edges row i = " << i << std::endl;
         return edgeDistance;
-
     }
+
     T findShortestPath(T startVertice, T endVertice){
-        std::cout<< "findShortestPath ..." << std::endl;
+       
 
         if (vSet.find(startVertice) == vSet.end()) return NULL;
+        
         //bool flag=false;
         
         queue<Vertice*> q;
@@ -84,14 +107,22 @@ public:
             Vertice* current = q.front();
             q.pop();
             
-            cout << "Visited vertex " << current->nodeID << endl;			
+            cout << "current->nodeID   " << current->nodeID << std::endl;			
+            cout << "current->neighbors.size()   " << current->neighbors.size() << std::endl;	
             for (set<Vertice*>::iterator neighbor= current->neighbors.begin(); 
 				neighbor!=current->neighbors.end(); ++neighbor) {
-                if((*neighbor) == startVertice) continue;   
-
+                //if((*neighbor) == startVertice) continue;   
+                cout << "neighbor->nodeID   " << (*neighbor)->nodeID << std::endl;	
+                //if((*neighbor)->shortestDistanceFromStart == superInt) continue;
                 nextDistance=getEdgeDistance(startVertice,(*neighbor));
+                	
                 if(current->shortestDistanceFromStart+nextDistance > (*neighbor)->shortestDistanceFromStart) continue;    
                 else (*neighbor)->shortestDistanceFromStart= current->shortestDistanceFromStart+nextDistance;
+                cout << " its neighbor " << (*neighbor)->nodeID << " shortest "<< (*neighbor)->shortestDistanceFromStart <<std::endl;	
+                cout << " current->shortestDistanceFromStart+nextDistance " << current->shortestDistanceFromStart  <<std::endl;
+                cout << " nextDistance " << nextDistance  <<std::endl;
+                cout << " (*neighbor)->shortestDistanceFromStart " << (*neighbor)->shortestDistanceFromStart  <<std::endl;
+
                 q.push((*neighbor));
                  //{
                  //   (*neighbor)->visited = true;
@@ -126,9 +157,9 @@ public:
     }
     
     void buildEdgeNeighbors() {
-        for (auto e1 = eSet.begin(); e1 != eSet.end(); ++e1) {
+        for (typename std::set<Edge<T>*>::iterator e1 = eSet.begin(); e1 != eSet.end(); ++e1) {
             std::cout<< "e1(" << (*e1)->p->nodeID<<"," <<(*e1)->q->nodeID<<") has neighbors: ";
-            for (auto e2 = eSet.begin(); e2 != eSet.end(); ++e2) {
+            for (typename std::set<Edge<T>*>::iterator e2 = eSet.begin(); e2 != eSet.end(); ++e2) {
                 if (*e1 != *e2  && (        // 
                     ((*e1)->p == (*e2)->p) ||
                     ((*e1)->p == (*e2)->q) ||
@@ -142,51 +173,102 @@ public:
             std::cout<<  std::endl;
         }
     }
+
+
+    void grapgInitilization(){
+        typename std::vector<std::vector<int> > mat = {
+            {1, 0, 1, 1, 1, 1, 0, 1, 1, 1 },
+            {1, 0, 1, 0, 1, 1, 1, 0, 1, 1 },
+            {1, 1, 1, 0, 1, 1, 0, 1, 0, 1 },
+            {0, 0, 0, 0, 1, 0, 0, 0, 0, 1 },
+            {1, 1, 1, 0, 1, 1, 1, 0, 1, 0 },
+            {1, 0, 1, 1, 1, 1, 0, 1, 0, 0 },
+            {1, 0, 0, 0, 0, 0, 0, 0, 0, 1 },
+            {1, 0, 1, 1, 1, 1, 0, 1, 1, 1 },
+            {1, 1, 0, 0, 0, 0, 1, 0, 0, 1 }
+	    };
+        
+        rowCount=mat.size(), columnCount=mat[0].size();
+        Matrix<int> A(rowCount, columnCount);
+
+
+        A.printMatrix();
+
+        int nodeNumber=rowCount>columnCount?rowCount:columnCount;
+        node=new Vertice[nodeNumber];
+        for(int i=0; i< nodeNumber; i++)
+            node[i].nodeID=i;
+
+        std::cout<< "nodeNumber= " << nodeNumber << std::endl;
+        for(int i=0; i< nodeNumber; i++){
+            node[i].nodeID=i;
+            node[i].shortestDistanceFromStart=superInt;    // a value beyond scope
+            vSet.insert(&node[i]);
+        }
+        edges=new Edge<Vertice*>*[rowCount];
+        for(int i=0; i<rowCount; i++)
+            edges[i]=new Edge<Vertice*>[columnCount];
+
+        for (int i = 0; i < rowCount; i++) {
+            //std::cout << "edges row i = " << i << std::endl;
+            for (int j = 0; j < columnCount; j++) { // avoid duplicate edges and self-loops
+                //std::cout << "edges column j = " << j << std::endl;
+                if ( (mat[i][j]) != 0) edges[i][j].distance=mat[i][j];
+                else {
+                    edges[i][j].distance=superInt;
+                    edges[i][j].p=&node[i];
+                    edges[i][j].q=&node[j];
+                    edges[i][j].p->neighbors.insert(&node[j]);
+                    edges[i][j].q->neighbors.insert(&node[i]);
+                }    
+                    //std::cout << "edges[" << i << "," << j << "] = " <<mat[i][j]<< std::endl;
+                
+            }
+            //std::cout << "edges row i = " << i << std::endl;
+        }   
+
+    
+
+        //std::cout<< "row size " << edges.size() << std::endl;
+        //std::cout<< "column size " << edges[0].size() << std::endl;
+    
+    };
+
+    void printArray(){
+        for (int i = 0; i < rowCount; i++) {
+            for (int j = 0; j < columnCount; j++) { // avoid duplicate edges and self-loops
+                std::cout << edges[i][j].distance<<", "; 
+            }
+            std::cout << std::endl;
+        }        
+    }
+
 };
 
 int main() {
 
-    std::vector<std::vector<int>> mat = {{1, 0, 1, 1, 1, 1, 0, 1, 1, 1 },
-                  {1, 0, 1, 0, 1, 1, 1, 0, 1, 1 },
-                  {1, 1, 1, 0, 1, 1, 0, 1, 0, 1 },
-                  {0, 0, 0, 0, 1, 0, 0, 0, 0, 1 },
-                  {1, 1, 1, 0, 1, 1, 1, 0, 1, 0 },
-                  {1, 0, 1, 1, 1, 1, 0, 1, 0, 0 },
-                  {1, 0, 0, 0, 0, 0, 0, 0, 0, 1 },
-                  {1, 0, 1, 1, 1, 1, 0, 1, 1, 1 },
-                  {1, 1, 0, 0, 0, 0, 1, 0, 0, 1 }};
-    int rowCount, columnCount;
-    rowCount=mat.size(), columnCount=mat[0].size();
-    Matrix<int> A(rowCount, columnCount);
-    A.printMatrix();
+
     
     Graph<Vertice*> g;     
-
-    Vertice node[rowCount];
-    for(int i=0; i< rowCount; i++){
-        node[i].nodeID=i;
-        node[i].shortestDistanceFromStart=INT_MAX/2;    // a value beyond scope
-        g.vSet.insert(&node[i]);
-    }
-
-      
-    vector<vector<Edge<Vertice*>*>> edges(rowCount, vector<Edge<Vertice*>*>(columnCount, nullptr));
+    g.grapgInitilization();
     
-    for (int i = 0; i < rowCount; i++) {
-        for (int j = i + 1; j < columnCount; j++) { // avoid duplicate edges and self-loops
-            edges[i][j] = new Edge<Vertice*>(&node[i], &node[j]);
-            if(mat[i][j] != 0) edges[i][j]=NULL;
-            else edges[i][j]->distance=mat[i][j];
-            g.eSet.insert(edges[i][j]);
 
-        }
-    }
 
-    std::cout<< "g.eSet.insert(edges[i][j]);" << std::endl;
+    //std::cout<< "rowCount " << rowCount << std::endl;
+    //std::cout<< "columnCount " << columnCount << std::endl;
 
-    g.buildEdgeNeighbors();
-    g.findShortestPath(&node[0], &node[4]);
-    std::cout<< "shortest path"<< node[4].shortestDistanceFromStart<< std::endl;
+
+    
+
+    //g.buildEdgeNeighbors();
+    g.findShortestPath(&g.node[0], &g.node[4]);
+    std::cout << "0 -> 4" << 4 << g.node[4].shortestDistanceFromStart <<  std::endl;
+
+    
+
+    
+        
+        
 
      //v0(0), v1(1), v2(2), v3(3), v4(4);
     //Edge<Vertice*> e1(&v0, &v1), e2(&v0, &v2), e3(&v1, &v3), e4(&v1, &v4), e5(&v2, &v4);

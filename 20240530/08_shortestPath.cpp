@@ -36,10 +36,10 @@ public:
     bool visited=false;
 
     Edge(T source_V, T destinate_V) : p(source_V), q(destinate_V) {
-        p->neighbors.insert(q);
-        q->neighbors.insert(p);
-        elements.insert(p);
-        elements.insert(q);
+        //p->neighbors.insert(q);
+        //q->neighbors.insert(p);
+        //elements.insert(p);
+        //elements.insert(q);
     }
     Edge(){}
 
@@ -72,29 +72,31 @@ public:
     int getEdgeDistance(T startVertice, T endVertice){
         int edgeDistance=superInt;       // a value beyond scope
         bool flag=false;
-        std::cout << "edges[" << startVertice->nodeID << "," << endVertice->nodeID << std::endl;
-        if(endVertice->shortestDistanceFromStart == superInt) return superInt;
+        //std::cout << "getEdgeDistance edges[" << startVertice->nodeID << "," << endVertice->nodeID <<"] " << std::endl;
+        //if(endVertice->shortestDistanceFromStart == superInt) return superInt;
+        //std::cout << "getEdgeDistance" << std::endl;
         for (int i = 0; i < rowCount; i++) {
             //std::cout << "edges row i = " << i << std::endl;
             for (int j = 0; j < columnCount; j++) { // avoid duplicate edges and self-loops
                 //std::cout << "edges column j = " << j << std::endl;
                 if(edges[i][j].p == startVertice && edges[i][j].q == endVertice){
+                    //if(edges[i][j].distance == superInt) {bounfFlag=true; break;}
                     edgeDistance=edges[i][j].distance;
                     flag=true;
-                    std::cout << "edges[" << i << "," << j << "] distance = " <<edgeDistance<< std::endl;
-
+                    //std::cout << "edges[" << i << "," << j << "] distance = " <<edgeDistance<< std::endl;
+                    break;
                 }
-                }
+            }
             if(flag==true) break;
         }
             //std::cout << "edges row i = " << i << std::endl;
         return edgeDistance;
     }
 
-    T findShortestPath(T startVertice, T endVertice){
+    bool findShortestPath(T startVertice, T endVertice){
        
 
-        if (vSet.find(startVertice) == vSet.end()) return NULL;
+        if (vSet.find(startVertice) == vSet.end()) return false;
         
         //bool flag=false;
         
@@ -107,23 +109,33 @@ public:
             Vertice* current = q.front();
             q.pop();
             
-            cout << "current->nodeID   " << current->nodeID << std::endl;			
-            cout << "current->neighbors.size()   " << current->neighbors.size() << std::endl;	
+            cout << "current->nodeID   " << current->nodeID << std::endl;		
+            cout << "current->neighbors.size()   " << current->neighbors.size() << std::endl;
+            if(current->neighbors.size() == 0)	continue;
             for (set<Vertice*>::iterator neighbor= current->neighbors.begin(); 
-				neighbor!=current->neighbors.end(); ++neighbor) {
-                //if((*neighbor) == startVertice) continue;   
-                cout << "neighbor->nodeID   " << (*neighbor)->nodeID << std::endl;	
-                //if((*neighbor)->shortestDistanceFromStart == superInt) continue;
+				neighbor!=current->neighbors.end(); neighbor++) {
+                if((*neighbor) == startVertice) continue;   
+                //cout << " before (*neighbor)->shortestDistanceFromStart " << (*neighbor)->shortestDistanceFromStart<< std::endl;	
+                //if((*neighbor)->shortestDistanceFromStart == superInt) continue;   
+                //cout << "findShortestPath for loop  before nextDistance " << std::endl;	
+                
                 nextDistance=getEdgeDistance(startVertice,(*neighbor));
-                	
-                if(current->shortestDistanceFromStart+nextDistance > (*neighbor)->shortestDistanceFromStart) continue;    
-                else (*neighbor)->shortestDistanceFromStart= current->shortestDistanceFromStart+nextDistance;
-                cout << " its neighbor " << (*neighbor)->nodeID << " shortest "<< (*neighbor)->shortestDistanceFromStart <<std::endl;	
-                cout << " current->shortestDistanceFromStart+nextDistance " << current->shortestDistanceFromStart  <<std::endl;
-                cout << " nextDistance " << nextDistance  <<std::endl;
+
+                if(nextDistance == superInt) continue;  // no edge
+
+                //cout << "neighbor->nodeID   " << (*neighbor)->nodeID <<"   nextDistance = "<< nextDistance<<  std::endl;
+                if((*neighbor)->shortestDistanceFromStart < 0 || (current->shortestDistanceFromStart+nextDistance < (*neighbor)->shortestDistanceFromStart)) {
+                    (*neighbor)->shortestDistanceFromStart=	current->shortestDistanceFromStart+nextDistance;  
+                    q.push((*neighbor)); 
+                }
+                    
+                //else (*neighbor)->shortestDistanceFromStart= current->shortestDistanceFromStart+nextDistance;
+                cout << " its neighbor " << (*neighbor)->nodeID << " shortest= "<< (*neighbor)->shortestDistanceFromStart <<std::endl;	
+                //cout << " current->shortestDistanceFromStart+nextDistance " << current->shortestDistanceFromStart  <<std::endl;
+                //cout << " nextDistance " << nextDistance  <<std::endl;
                 cout << " (*neighbor)->shortestDistanceFromStart " << (*neighbor)->shortestDistanceFromStart  <<std::endl;
 
-                q.push((*neighbor));
+                
                  //{
                  //   (*neighbor)->visited = true;
                  //   q.push((*neighbor));
@@ -132,7 +144,7 @@ public:
         }
 
         
-        return endVertice;
+        return true;
     }
     void bfs(Vertice* startVertice) {
         if (vSet.find(startVertice) == vSet.end()) return;
@@ -202,7 +214,7 @@ public:
         std::cout<< "nodeNumber= " << nodeNumber << std::endl;
         for(int i=0; i< nodeNumber; i++){
             node[i].nodeID=i;
-            node[i].shortestDistanceFromStart=superInt;    // a value beyond scope
+            node[i].shortestDistanceFromStart=-1;    // a value beyond scope
             vSet.insert(&node[i]);
         }
         edges=new Edge<Vertice*>*[rowCount];
@@ -213,14 +225,13 @@ public:
             //std::cout << "edges row i = " << i << std::endl;
             for (int j = 0; j < columnCount; j++) { // avoid duplicate edges and self-loops
                 //std::cout << "edges column j = " << j << std::endl;
-                if ( (mat[i][j]) != 0) edges[i][j].distance=mat[i][j];
-                else {
-                    edges[i][j].distance=superInt;
-                    edges[i][j].p=&node[i];
-                    edges[i][j].q=&node[j];
-                    edges[i][j].p->neighbors.insert(&node[j]);
-                    edges[i][j].q->neighbors.insert(&node[i]);
-                }    
+                if ( (mat[i][j]) != 0 && i != j) edges[i][j].distance=mat[i][j];    
+                else edges[i][j].distance=superInt;
+                edges[i][j].p=&node[i];
+                edges[i][j].q=&node[j];
+                if((mat[i][j]) != 0) edges[i][j].p->neighbors.insert(&node[j]);
+                //edges[i][j].q->neighbors.insert(&node[i]);
+
                     //std::cout << "edges[" << i << "," << j << "] = " <<mat[i][j]<< std::endl;
                 
             }
@@ -251,6 +262,7 @@ int main() {
     
     Graph<Vertice*> g;     
     g.grapgInitilization();
+    g.printArray();
     
 
 
@@ -262,7 +274,8 @@ int main() {
 
     //g.buildEdgeNeighbors();
     g.findShortestPath(&g.node[0], &g.node[4]);
-    std::cout << "0 -> 4" << 4 << g.node[4].shortestDistanceFromStart <<  std::endl;
+
+    std::cout << "0 -> 4   shortest distance" << g.node[4].shortestDistanceFromStart <<  std::endl;
 
     
 

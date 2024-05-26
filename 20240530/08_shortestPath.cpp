@@ -127,11 +127,16 @@ public:
                 if((*neighbor)->shortestDistanceFromStart < 0 || (current->shortestDistanceFromStart+nextDistance < (*neighbor)->shortestDistanceFromStart)) {
                     (*neighbor)->shortestDistanceFromStart=	current->shortestDistanceFromStart+nextDistance;  
                     q.push((*neighbor)); 
+                    printEdgeTable();
+                    cout << "neighbor->nodeID   " << (*neighbor)->nodeID << std::endl;
+                    printNodeList();
+                    
+                    //std::cout <<"(*neighbor)->nodeID "<< (*neighbor)->nodeID<< " (*neighbor)->shortestDistanceFromStart " << (*neighbor)->shortestDistanceFromStart  <<std::endl;
                 }
                     
                 //else (*neighbor)->shortestDistanceFromStart= current->shortestDistanceFromStart+nextDistance;
                 cout << " its neighbor " << (*neighbor)->nodeID << " shortest= "<< (*neighbor)->shortestDistanceFromStart <<std::endl;	
-                //cout << " current->shortestDistanceFromStart+nextDistance " << current->shortestDistanceFromStart  <<std::endl;
+                
                 //cout << " nextDistance " << nextDistance  <<std::endl;
                 cout << " (*neighbor)->shortestDistanceFromStart " << (*neighbor)->shortestDistanceFromStart  <<std::endl;
 
@@ -189,15 +194,15 @@ public:
 
     void grapgInitilization(){
         typename std::vector<std::vector<int> > mat = {
-            {1, 0, 1, 1, 1, 1, 0, 1, 1, 1 },
-            {1, 0, 1, 0, 1, 1, 1, 0, 1, 1 },
-            {1, 1, 1, 0, 1, 1, 0, 1, 0, 1 },
-            {0, 0, 0, 0, 1, 0, 0, 0, 0, 1 },
-            {1, 1, 1, 0, 1, 1, 1, 0, 1, 0 },
-            {1, 0, 1, 1, 1, 1, 0, 1, 0, 0 },
-            {1, 0, 0, 0, 0, 0, 0, 0, 0, 1 },
-            {1, 0, 1, 1, 1, 1, 0, 1, 1, 1 },
-            {1, 1, 0, 0, 0, 0, 1, 0, 0, 1 }
+            { 0, 4, 0, 0, 0, 0, 0, 8, 0 },
+            { 4, 0, 8, 0, 0, 0, 0, 11, 0 },
+            { 0, 8, 0, 7, 0, 4, 0, 0, 2 },
+            { 0, 0, 7, 0, 9, 14, 0, 0, 0 },
+            { 0, 0, 0, 9, 0, 10, 0, 0, 0 },
+            { 0, 0, 4, 14, 10, 0, 2, 0, 0 },
+            { 0, 0, 0, 0, 0, 2, 0, 1, 6 },
+            { 8, 11, 0, 0, 0, 0, 1, 0, 7 },
+            { 0, 0, 2, 0, 0, 0, 6, 7, 0 } 
 	    };
         
         rowCount=mat.size(), columnCount=mat[0].size();
@@ -245,7 +250,7 @@ public:
     
     };
 
-    void printArray(){
+    void printEdgeTable(){
         for (int i = 0; i < rowCount; i++) {
             for (int j = 0; j < columnCount; j++) { // avoid duplicate edges and self-loops
                 std::cout << edges[i][j].distance<<", "; 
@@ -253,6 +258,13 @@ public:
             std::cout << std::endl;
         }        
     }
+
+    void printNodeList(){
+        for (int i = 0; i < rowCount; i++) {
+            std::cout << node[i].shortestDistanceFromStart<<", ";
+        }        
+        std::cout << std::endl;
+    }    
 
 };
 
@@ -262,7 +274,7 @@ int main() {
     
     Graph<Vertice*> g;     
     g.grapgInitilization();
-    g.printArray();
+    g.printEdgeTable();
     
 
 
@@ -273,9 +285,9 @@ int main() {
     
 
     //g.buildEdgeNeighbors();
-    g.findShortestPath(&g.node[0], &g.node[4]);
+    g.findShortestPath(&g.node[0], &g.node[7]);
 
-    std::cout << "0 -> 4   shortest distance" << g.node[4].shortestDistanceFromStart <<  std::endl;
+    std::cout << "0 -> 4   shortest distance=   " << g.node[7].shortestDistanceFromStart <<  std::endl;
 
     
 

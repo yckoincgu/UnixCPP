@@ -57,8 +57,8 @@ class Graph {
 public:
     std::set<T> vSet;
     std::set<Edge<T>*> eSet;
-    Vertice* node=nullptr;
-    Edge<Vertice*>** edges=nullptr;
+    Vertice* node;
+    Edge<Vertice*>** edges;
     int rowCount, columnCount;
 
     std::set<T> makeEdgeSignature(T startVertice, T endVertice){
@@ -109,13 +109,13 @@ public:
             Vertice* current = q.front();
             q.pop();
             printNodesShortest();
-            cout << "current->nodeID   " << current->nodeID << std::endl;		
+            cout << "pop current->nodeID   " << current->nodeID << std::endl;		
             cout << "current->neighbors.size()   " << current->neighbors.size() << std::endl;
             if(current->neighbors.size() == 0)	continue;
             for (set<Vertice*>::iterator neighbor= current->neighbors.begin(); 
 				neighbor!=current->neighbors.end(); neighbor++) {
                 if((*neighbor) == startVertice) continue;   
-                //cout << " before (*neighbor)->shortestDistanceFromStart " << (*neighbor)->shortestDistanceFromStart<< std::endl;	
+                //cout << " (*neighbor)->nodeID " << (*neighbor)->nodeID << std::endl;	
                 //if((*neighbor)->shortestDistanceFromStart == superInt) continue;   
                 //cout << "findShortestPath for loop  before nextDistance " << std::endl;	
                 
@@ -128,7 +128,7 @@ public:
                     (*neighbor)->shortestDistanceFromStart=	current->shortestDistanceFromStart+nextDistance;  
                     q.push((*neighbor));     
                     //printEdgeTable();
-                    cout << "neighbor->nodeID   " << (*neighbor)->nodeID << std::endl;
+                    cout << "push neighbor->nodeID   " << (*neighbor)->nodeID << std::endl;
                     
                     
                     //std::cout <<"(*neighbor)->nodeID "<< (*neighbor)->nodeID<< " (*neighbor)->shortestDistanceFromStart " << (*neighbor)->shortestDistanceFromStart  <<std::endl;
@@ -194,7 +194,7 @@ public:
 
 
     void grapgInitilization(){
-        typename std::vector<std::vector<int> > mat = {
+        int mat[9][9] = {
             { 0, 4, 0, 0, 0, 0, 0, 8, 0 },
             { 4, 0, 8, 0, 0, 0, 0, 11, 0 },
             { 0, 8, 0, 7, 0, 4, 0, 0, 2 },
@@ -220,11 +220,12 @@ public:
 
 */        
         
-        rowCount=mat.size(), columnCount=mat[0].size();
-        Matrix<int> A(rowCount, columnCount);
+        rowCount=9, 
+		columnCount=9;
+        //Matrix<int> A(rowCount, columnCount);
 
 
-        A.printMatrix();
+        //A.printMatrix();
 
         int nodeNumber=rowCount>columnCount?rowCount:columnCount;
         node=new Vertice[nodeNumber];
@@ -303,8 +304,8 @@ int main() {
     g.findShortestPath(&g.node[0], &g.node[6]);
 
     std::cout << "0 -> 6   shortest distance=   " << g.node[6].shortestDistanceFromStart <<  std::endl;
-    std::cout << "0 -> 5   shortest distance=   " << g.node[5].shortestDistanceFromStart <<  std::endl;
-    std::cout << "0 -> 4   shortest distance=   " << g.node[4].shortestDistanceFromStart <<  std::endl;
+
+    
 
     
         

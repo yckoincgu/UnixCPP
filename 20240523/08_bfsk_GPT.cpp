@@ -22,31 +22,33 @@ public:
     }
 };
 
+template <typename T>
 class Edge {
 public:
-    Vertice* p;
-    Vertice* q;
+    T p;
+    T q;
 
-    Edge(Vertice* source_V, Vertice* destinate_V) : p(source_V), q(destinate_V) {
+    Edge(T source_V, T destinate_V) : p(source_V), q(destinate_V) {
         p->neighbors.push_back(q);
         q->neighbors.push_back(p);
     }
 };
 
+template<typename T, typename U>
 class Graph {
 public:
-    set<Vertice*> vSet;
-    set<Edge*> eSet;
+    set<T> vSet;
+    set<U> eSet;
 
-    void bfs(Vertice* startVertex) {
+    void bfs(T startVertex) {
         if (vSet.find(startVertex) == vSet.end()) return;
-        Vertice* neighbor;
-        queue<Vertice*> q;
+        
+        queue<T> q;
         startVertex->visited = true;
         q.push(startVertex);
 
         while (!q.empty()) {
-            Vertice* current = q.front();
+            T current = q.front();
             q.pop();
             cout << "Visited vertex " << current->nodeID << endl;
 
@@ -63,9 +65,9 @@ public:
 
 int main() {
     Vertice v0(0), v1(1), v2(2), v3(3), v4(4), v5(5);
-    Edge e1(&v0, &v1), e2(&v0, &v2), e3(&v1, &v3), e4(&v1, &v4), e5(&v2, &v4), e6(&v3, &v5);
+    Edge<Vertice*> e1(&v0, &v1), e2(&v0, &v2), e3(&v1, &v3), e4(&v1, &v4), e5(&v2, &v4), e6(&v3, &v5);
 
-    Graph g;
+    Graph<Vertice*, Edge<Vertice*>*> g;
     g.vSet.insert(&v0);
     g.vSet.insert(&v1);
     g.vSet.insert(&v2);

@@ -93,7 +93,7 @@ public:
         return edgeDistance;
     }
 
-    bool findShortestPath(T startVertice, T endVertice){
+    bool findShortestPath(T startVertice){
        
 
         if (vSet.find(startVertice) == vSet.end()) return false;
@@ -128,7 +128,7 @@ public:
                     (*neighbor)->shortestDistanceFromStart=	current->shortestDistanceFromStart+nextDistance;  
                     q.push((*neighbor));     
                     //printEdgeTable();
-                    cout << "neighbor->nodeID   " << (*neighbor)->nodeID << std::endl;
+                    cout << "shortest nodeID   " << (*neighbor)->nodeID << std::endl;
                     
                     
                     //std::cout <<"(*neighbor)->nodeID "<< (*neighbor)->nodeID<< " (*neighbor)->shortestDistanceFromStart " << (*neighbor)->shortestDistanceFromStart  <<std::endl;
@@ -300,7 +300,7 @@ int main() {
     
 
     //g.buildEdgeNeighbors();
-    g.findShortestPath(&g.node[0], &g.node[6]);
+    g.findShortestPath(&g.node[0]);
 
     std::cout << "0 -> 6   shortest distance=   " << g.node[6].shortestDistanceFromStart <<  std::endl;
     std::cout << "0 -> 5   shortest distance=   " << g.node[5].shortestDistanceFromStart <<  std::endl;

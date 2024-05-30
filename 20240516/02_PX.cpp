@@ -51,7 +51,11 @@ class AxB{
 		b.printMatrix();
 		
 		n=a.n; m=b.m;
-		Matrix<int**> c(n,m);
+			
+		// The type T in this context will be consistently used as 
+		// int** throughout the class methods.
+		Matrix<T> c(n,m);	// create object c
+
 		T A=a.A, B=b.A; C=c.A;
 		for(int i=0; i<a.n; i++){
 			for(int j=0; j<b.m; j++){
@@ -71,8 +75,8 @@ class AxB{
 }; 
 
 int main() {
-	Matrix<int**> a(6,5);
-	Matrix<int**> b(5,6);
+	Matrix<int**> a(6,5);	// create object a
+	Matrix<int**> b(5,6);	// create object a
 	
 	AxB<int**> c(a,b);
 

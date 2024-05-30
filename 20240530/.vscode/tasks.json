@@ -8,7 +8,7 @@
             "args": [
                 "-std=c++14",           // Specify C++17 standard
                 "-g",
-                "08_shortestPath.cpp",  // added for project
+                "02_shortestPath.cpp",  // added for project
                 "Matrix.cpp",           // added for project
                 "00_includeHeader.cpp", // added for project
                 "-Iinclude",            // added for project

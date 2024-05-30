@@ -65,7 +65,13 @@ public:
 
 int main() {
     Vertice v0(0), v1(1), v2(2), v3(3), v4(4), v5(5);
-    Edge<Vertice*> e1(&v0, &v1), e2(&v0, &v2), e3(&v1, &v3), e4(&v1, &v4), e5(&v2, &v4), e6(&v3, &v5);
+    Edge<Vertice*> 
+    e1(&v0, &v1), e11(&v1, &v0), 
+    e2(&v0, &v2), e12(&v2, &v0), 
+    e3(&v1, &v3), e13(&v3, &v1),
+    e4(&v1, &v4), e14(&v4, &v1),
+    e5(&v2, &v4), e15(&v4, &v2),
+    e6(&v3, &v5), e16(&v5, &v3);
 
     Graph<Vertice*, Edge<Vertice*>*> g;
     g.vSet.insert(&v0);
@@ -81,6 +87,12 @@ int main() {
     g.eSet.insert(&e4);
     g.eSet.insert(&e5);
     g.eSet.insert(&e6);
+    g.eSet.insert(&e11);
+    g.eSet.insert(&e12);
+    g.eSet.insert(&e13);
+    g.eSet.insert(&e14);
+    g.eSet.insert(&e15);
+    g.eSet.insert(&e16);    
 
     g.bfs(&v1);
 

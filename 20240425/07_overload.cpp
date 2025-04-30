@@ -1,56 +1,55 @@
 #include <iostream>
 using namespace std;
 
-//  
+// 預設引數 (Default Argument)
 int sum(int a, int b=20)
 {
   int result;
- 
+
   result = a + b;
-  
+
   return (result);
 }
 
-// Function to add two integers
+// 函數多載 (Function Overloading) - 加總兩個整數
 int add(int a, int b) {
     return a + b;
 }
 
-// Overloaded function to add three integers
+// 函數多載 (Function Overloading) - 加總三個整數
 int add(int a, int b, int c) {
     return a + b + c;
 }
 
-// Overloaded function to add two doubles
+// 函數多載 (Function Overloading) - 加總兩個雙精度浮點數
 double add(double a, double b) {
     return a + b;
 }
- 
+
 int main ()
 {
 
-   	/* overloaded functions, 
-	   (1) the compiler determines which version of the function to call based on the arguments provided.
-	   (2) must differ in the number or type of their parameters
-	   
-	*/   
-    std::cout << add(2, 3) << std::endl;         // Calls the first add function
-    std::cout << add(2, 3, 4) << std::endl;      // Calls the second add function
-    std::cout << add(2.5, 3.7) << std::endl;     // Calls the third add function   
-   
-   // local variables
+    /* 函數多載 (Overloaded Functions),
+       (1) 編譯器會根據提供的引數 (arguments) 判斷要呼叫哪個版本的函數。
+       (2) 函數必須在參數 (parameters) 的數量或型別上有所不同。
+    */
+    std::cout << add(2, 3) << std::endl;         // 呼叫第一個 add 函數
+    std::cout << add(2, 3, 4) << std::endl;      // 呼叫第二個 add 函數
+    std::cout << add(2.5, 3.7) << std::endl;     // 呼叫第三個 add 函數
+
+   // 區域變數 (Local Variables)
    int a = 100;
    int b = 200;
    int result;
- 
-   // �p�Gparameter���Ȥ��d�šA�h�ϥζǻ����ƭ� 
+
+   // 傳遞 (Pass) 參數 (parameters) a 和 b，因此 b 的預設值 20 會被覆寫
    result = sum(a, b);
-   cout << "Total value is :" << result << endl;
- 
-   // �p�Gparameter���ȯd�šA�h�ϥ��q�{��20 
+   cout << "總值是 :" << result << endl;
+
+   // 只傳遞 (Pass) 參數 (parameter) a，因此 b 使用預設值 20
    result = sum(a);
-   cout << "Total value is :" << result << endl;
-      
- 
+   cout << "總值是 :" << result << endl;
+
+
    return 0;
 }

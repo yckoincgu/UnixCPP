@@ -104,8 +104,5 @@ int main() {
     << right << setw(value_width) << ""
     << right << setw(value_width) << "" << endl;
 
-    
-    
-
     return 0;
 }

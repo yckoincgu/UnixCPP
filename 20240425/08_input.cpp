@@ -6,6 +6,7 @@ using namespace std;
 // Driver Code 
 int main() 
 { 
+	cout << "Enter your first number ";
 	int i; 
 
 	// Take input using cin 

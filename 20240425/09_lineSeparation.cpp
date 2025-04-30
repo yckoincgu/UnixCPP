@@ -9,14 +9,16 @@ int main() {
     char str[] = "Hello, world! This is a test.";
     const char* delim = " ,.!"; // Delimiters are space, comma, and period
 
+	std::cout<< "The first part" << std::endl;
     // Get the first token
     char* token = strtok(str, delim);
-
     // Iterate through the tokens
     while (token != NULL) {
         std::cout << token << std::endl;
         // Get the next token
-        token = strtok(NULL, delim);	// not recommended
+        token = strtok(NULL, delim);	// NULL means "Continue searching for the next token 
+										// in the same string that I was working on in the previous call, 
+										// using the delimiters I specified before.
     }
 /* --------We will come back after introduction of class ---------*/    
 	/* std::string 
@@ -25,32 +27,38 @@ int main() {
 	   (2) 	managing its own memory and can 
 	    	dynamically resize itself to accommodate the length of the text it holds
 	*/
+
+
+	std::cout<< std::endl<< "The second part" << std::endl;	
 	std::string inputLine= "Hello world This is a test", 
-				word;
-	
+	word;
+
 	//std::getline(std::cin, inputLine);	// get an input line
+
+
 	std::vector<std::string> words;
 	/*
-		std::vector
-			providing dynamic array functionality
-		std::vector<std::string>
-		 	a dynamic array that can store strings. 
+	std::vector
+	providing dynamic array functionality
+	std::vector<std::string>
+	a dynamic array that can store strings. 
 	*/
 	std::istringstream iss(inputLine); 
 	/*
-		std::istringstream
-			parsing inputLine into words 
+	std::istringstream
+	parsing inputLine into words 
 	*/
 	int wordsLength=0;
-    while (std::getline(iss, word, ' ')) {
-        std::cout << word << " ";
+	while (std::getline(iss, word, ' ')) {
+		std::cout << word << std::endl;
 		words.push_back(word);
 		wordsLength++;
-    }
- 
-    for (int i=0; i< wordsLength; i++) {
-        std::cout << words.at(i) << " ";
-    }
+	}
+
+	
+	for (int i=0; i< wordsLength; i++) {
+		std::cout << words.at(i) << " ";
+	}
 	
     return 0;
 }

@@ -1,9 +1,9 @@
 #include <iostream>
- 
+
 void func(void);
- 
-static int count = 10; /* ¥ş°ì */
- 
+
+static int count = 10; /* å…¨åŸŸéœæ…‹è®Šæ•¸ */
+
 int main()
 {
     while(count--)
@@ -15,8 +15,8 @@ int main()
 
 void func( void )
 {
-    static int i = 5; // §½³¡
+    static int i = 5; // å±€éƒ¨éœæ…‹è®Šæ•¸
     i++;
-    std::cout << "§½³¡ i = " << i ;
-    std::cout << " , ¥ş°ì count = " << count << std::endl;
+    std::cout << "å±€éƒ¨éœæ…‹è®Šæ•¸ i = " << i ;
+    std::cout << " , å…¨åŸŸéœæ…‹è®Šæ•¸ count = " << count << std::endl;
 }

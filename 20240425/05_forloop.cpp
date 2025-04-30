@@ -6,7 +6,7 @@ int main ()
  
    for( ; ; )
    {
-      printf("This loop will run forever.\n");
+      std::cout <<"This loop will run forever.\n" << endl;
    }
  
    return 0;

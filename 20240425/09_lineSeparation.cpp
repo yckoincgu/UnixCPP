@@ -17,48 +17,10 @@ int main() {
         std::cout << token << std::endl;
         // Get the next token
         token = strtok(NULL, delim);	// NULL means "Continue searching for the next token 
-										// in the same string that I was working on in the previous call, 
-										// using the delimiters I specified before.
+										// In the same string that it was working on, 
+										// strtok continues the previous call, 
+										// using the delimiters specified before.
     }
-/* --------We will come back after introduction of class ---------*/    
-	/* std::string 
-	   (1) 	a class in the C++ Standard Library 
-	 		that represents a sequence of characters
-	   (2) 	managing its own memory and can 
-	    	dynamically resize itself to accommodate the length of the text it holds
-	*/
-
-
-	std::cout<< std::endl<< "The second part" << std::endl;	
-	std::string inputLine= "Hello world This is a test", 
-	word;
-
-	//std::getline(std::cin, inputLine);	// get an input line
-
-
-	std::vector<std::string> words;
-	/*
-	std::vector
-	providing dynamic array functionality
-	std::vector<std::string>
-	a dynamic array that can store strings. 
-	*/
-	std::istringstream iss(inputLine); 
-	/*
-	std::istringstream
-	parsing inputLine into words 
-	*/
-	int wordsLength=0;
-	while (std::getline(iss, word, ' ')) {
-		std::cout << word << std::endl;
-		words.push_back(word);
-		wordsLength++;
-	}
-
-	
-	for (int i=0; i< wordsLength; i++) {
-		std::cout << words.at(i) << " ";
-	}
 	
     return 0;
 }

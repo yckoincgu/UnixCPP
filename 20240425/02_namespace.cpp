@@ -9,6 +9,7 @@ using namespace std;
 	std: 
 	(1) standard libraries
 */
+
 namespace first_space
 {
   void func()

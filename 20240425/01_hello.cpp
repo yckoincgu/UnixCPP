@@ -10,7 +10,7 @@ int main()
     	which is used to send output to the standard output (usually the console)   
     (2) The scope resolution operator :: to access the function inside the namespace.	
  */	
-	 std::cout << "Hello, World 1";
+	 std::cout << "Hello, World 1    ";
 	 std::cout << "Hello, world 2 with a new line character \\n" << std::endl;	 
 	 int i;
 	 std::cin>>i;

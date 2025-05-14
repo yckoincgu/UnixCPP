@@ -12,7 +12,7 @@ void addFruit(std::vector<std::string>& fruits, const std::string& fruit) {
 
 int main() {
     std::vector<std::string> fruits = {"apple", "banana"};
-    addFruit(fruits, "cherry"); // Pass by reference, compiler will make it a std::string then pass
+    addFruit(fruits, "cherry"); // Pass by reference, compiler will create a std::string then pass
 
     for (const auto& f : fruits) {
         std::cout << f << " "; // Output: apple banana cherry

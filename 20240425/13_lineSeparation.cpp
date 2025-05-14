@@ -9,7 +9,8 @@ int main() {
     std::istringstream iss(data);               // Creates a stream from the string
                                                 // Streams = I/O tools for sequential reading/writing (files, parsing).
     std::string fruit;
-    std::vector<std::string> fruits;
+    std::vector<std::string> fruits;            // std::vector is a container in C++.
+                                                // dynamic array
 
     while (std::getline(iss, fruit, ',')) {         // Stops at the first comma
                                                     // Returns a reference to iss (useful for chaining operations).

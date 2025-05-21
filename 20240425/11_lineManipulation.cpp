@@ -10,6 +10,8 @@ int main(){
     double doubleValue;
     std::string stringValue;
     bool boolValue;
+
+    
     // Extraction:  The >> operator extracts formatted data, typically separated by whitespace
     iss >> intValue >> doubleValue >> stringValue >> boolValue;
     std::cout << "Integer: " << intValue << std::endl;     // Output: Integer: 123

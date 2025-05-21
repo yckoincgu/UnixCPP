@@ -11,6 +11,7 @@ int main() {
     std::string fruit;
     std::vector<std::string> fruits;            // std::vector is a container in C++.
                                                 // dynamic array
+                                                // fruits is an object of type std::vector<std::string>
 
     while (std::getline(iss, fruit, ',')) {         // Stops at the first comma
                                                     // Returns a reference to iss (useful for chaining operations).
@@ -21,7 +22,7 @@ int main() {
     std::cout << "Fruits: ";
     for (const auto& f : fruits) {
         std::cout << f << " ";
-        // You cannot modify f here, and you are not making a copy by "const auto&"
+        // You CANNOT modify f here, and you are not making a copy by "const auto&"
     }
     std::cout << std::endl; // Output: Fruits: apple banana cherry
 

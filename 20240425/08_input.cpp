@@ -16,7 +16,7 @@ int main()
 	cout << "Your first number is " << i<< endl; 
 	
 	int a, b, c;
-    cout << "Enter the three numbers a, b & c" << endl;
+    cout << "Enter the three numbers b, a & c" << endl;
     cin >> b >> a >> c;	
 	cout << "Your first number is "<< a << endl; 
 	cout << "Your second number is "<< b << endl; 

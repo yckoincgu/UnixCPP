@@ -1,7 +1,7 @@
 #include <iostream>
-#include <vector>
 #include <sstream>
 #include <string>
+#include <vector>
 
 
 int main() {
@@ -27,7 +27,15 @@ int main() {
 	iss is an object containing inputline string but it is not a container
 	it can read data, does not change data, support formated extraction, Tokenize/convert strings, etc.
 	*/
-
+	std::cout << "The first approach as below:  "<< std::endl;
+	while(iss >> word)
+		std::cout << word << std::endl;	
+	
+	std::cout << std::endl;
+	std::cout << "The second approach as below:  "<< std::endl;
+	// Rewind the stream to read again
+    iss.clear();                   // Clear any error flags (e.g., eof)
+    iss.seekg(0);                  // Reset read position to start
 	int wordsLength=0;
 	while (std::getline(iss, word, ' ')) {
 		// parsing inputLine into words 
@@ -41,12 +49,9 @@ int main() {
 		std::cout << words.at(i) << " ";
 	}
 	std::cout << std::endl;
-	std::cout << "The last part as below:  "<< std::endl;
-	// Rewind the stream to read again
-    iss.clear();                   // Clear any error flags (e.g., eof)
-    iss.seekg(0);                  // Reset read position to start
-	while(iss >> word)
-		std::cout << word << std::endl;
+
+	
+
 	
     return 0;
 }

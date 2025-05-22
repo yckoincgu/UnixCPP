@@ -34,8 +34,6 @@ namespace MyNamespace {
     }
 }
 
-
-
 int main() {
 	using MyNamespace::myFunction; // Bring myFunction into the current scope	
     cout << myFunction(3, 4) << endl; // No need to use MyNamespace::
